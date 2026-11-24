@@ -7,7 +7,6 @@ import { createServer } from 'node:http'
 import path from 'node:path'
 
 const require = createRequire(import.meta.url)
-const { chromium } = require('playwright')
 const SITE = 'https://www.redtaxikotor.com'
 const DIST = path.resolve('dist')
 
@@ -20,6 +19,34 @@ const TOURS = ['kotor-perast-panorama', 'kotor-lovcen', 'kotor-sveti-stefan', 'k
 const p = (lang, key, sub) => (key === 'home' ? `/${lang}/` : `/${lang}/${SLUGS[key][lang]}${sub ? '/' + sub : ''}`)
 const pages = [...Object.keys(SLUGS).map((k) => ({ en: p('en', k), me: p('me', k) })), ...TOURS.map((t) => ({ en: p('en', 'excursions', t), me: p('me', 'excursions', t) }))]
 
+const today = new Date().toISOString().slice(0, 10)
+const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${pages.flatMap((pair) => ['en', 'me'].map((l) => `  <url>
+    <loc>${SITE}${pair[l]}</loc>
+    <lastmod>${today}</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="${SITE}${pair.en}"/>
+    <xhtml:link rel="alternate" hreflang="sr-ME" href="${SITE}${pair.me}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${pair.en}"/>
+  </url>`)).join('\n')}
+</urlset>
+`
+await writeFile(path.join(DIST, 'sitemap.xml'), xml)
+console.log('sitemap.xml:', pages.length * 2, 'urls')
+
+
+// Prerendering needs Chromium. If it is not available (e.g. a minimal CI image),
+// skip it: the site still works as a normal single-page app.
+let browser
+try {
+  const { chromium } = require('playwright')
+  browser = await chromium.launch()
+} catch (e) {
+  console.warn('\n⚠ Prerender skipped — Chromium is not available:', String(e.message).split('\n')[0])
+  console.warn('  The site still works; pages are rendered in the browser instead.\n')
+  process.exit(0)
+}
+
 const shell = await readFile(path.join(DIST, 'index.html'), 'utf8')
 const types = { '.js': 'text/javascript', '.css': 'text/css', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.html': 'text/html' }
 const server = createServer(async (req, res) => {
@@ -30,7 +57,6 @@ const server = createServer(async (req, res) => {
   } catch { res.writeHead(200, { 'content-type': 'text/html' }).end(shell) }
 }).listen(4789)
 
-const browser = await chromium.launch()
 const page = await browser.newPage()
 await page.route(/fonts\.(googleapis|gstatic)\.com|google\.com\/maps/, (r) => r.abort())
 for (const pair of pages) {
@@ -50,17 +76,3 @@ for (const pair of pages) {
 await browser.close()
 server.close()
 
-const today = new Date().toISOString().slice(0, 10)
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${pages.flatMap((pair) => ['en', 'me'].map((l) => `  <url>
-    <loc>${SITE}${pair[l]}</loc>
-    <lastmod>${today}</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="${SITE}${pair.en}"/>
-    <xhtml:link rel="alternate" hreflang="sr-ME" href="${SITE}${pair.me}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${pair.en}"/>
-  </url>`)).join('\n')}
-</urlset>
-`
-await writeFile(path.join(DIST, 'sitemap.xml'), xml)
-console.log('sitemap.xml:', pages.length * 2, 'urls')

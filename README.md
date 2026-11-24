@@ -68,7 +68,12 @@ npm run images     # convert originals in /photos → optimized WebP
 
 ## Deploy
 
-`dist/` is a static site. Configs are included for Netlify (`_redirects`), Vercel (`vercel.json`) and Apache/cPanel (`.htaccess`).
+`dist/` is a static site. Configs are included for Render (`render.yaml`), Netlify (`_redirects`), Vercel (`vercel.json`) and Apache/cPanel (`.htaccess`).
+
+**Render:** New → Blueprint → select this repo (uses `render.yaml`), or New → Static Site with
+build command `npm ci && (npx playwright install chromium || true) && npm run build` and publish directory `dist`,
+plus a rewrite rule `/*` → `/index.html`.
+The prerender step needs Chromium; if it cannot run on the build machine it is skipped automatically and the site still works.
 
 ## Photo credits
 
