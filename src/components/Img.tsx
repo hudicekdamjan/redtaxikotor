@@ -1,11 +1,11 @@
-import { IMAGES, type ImageKey } from '../config/images'
+import { IMAGES, type ImageDef, type ImageKey } from '../config/images'
 import { useLang } from '../context/LangContext'
 import { imageUrl } from '../config/imageUrl'
 
 /** Responsive WebP image from config/images.ts */
 export default function Img({ name, className = '', sizes = '100vw', priority = false, alt }: { name: ImageKey; className?: string; sizes?: string; priority?: boolean; alt?: string }) {
   const { lang } = useLang()
-  const img = IMAGES[name]
+  const img: ImageDef = IMAGES[name]
   return (
     <img
       src={imageUrl(img.file, 1600)}
@@ -18,6 +18,7 @@ export default function Img({ name, className = '', sizes = '100vw', priority = 
       fetchPriority={priority ? 'high' : 'auto'}
       decoding="async"
       className={className}
+      style={img.focus ? { objectPosition: img.focus } : undefined}
     />
   )
 }

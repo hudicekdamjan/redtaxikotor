@@ -3,9 +3,18 @@
 @tailwind utilities;
 
 @layer base {
-  html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+  /* The page sets its own colours, so it looks identical in light and dark phone modes.
+     Declaring both schemes prevents Chrome / Samsung Internet "auto dark" from recolouring it. */
+  :root { color-scheme: light dark; }
+  html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; background-color: #FFFFFF; }
+  @media (prefers-color-scheme: dark) { html { background-color: #FFFFFF; } }
   body { @apply bg-white font-sans text-ink antialiased; text-rendering: optimizeLegibility; }
   :focus-visible { outline: 2px solid #D71920; outline-offset: 2px; }
+  /* iOS Safari: date/time inputs otherwise collapse, centre their text and look different from Android */
+  input[type='date'], input[type='time'] { -webkit-appearance: none; appearance: none; min-height: 3rem; text-align: left; }
+  input::-webkit-date-and-time-value { text-align: left; }
+  /* Prevent iOS from enlarging text in landscape */
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   }

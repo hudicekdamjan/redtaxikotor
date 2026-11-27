@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Mail, Phone } from 'lucide-react'
 import { EMAIL, MUNICIPALITIES, MUNICIPALITY_IDS, telHotline, telMobile } from '../config/contacts'
-import { IMAGES } from '../config/images'
+import { IMAGES, PHOTOGRAPHER } from '../config/images'
+import { InstagramIcon } from './BrandIcons'
 import { NAV_KEYS, pathFor } from '../config/routes'
 import { useLang } from '../context/LangContext'
 import ContactButtons from './ContactButtons'
@@ -46,7 +47,18 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-white/45 sm:flex-row sm:items-start sm:justify-between">
           <p>© {new Date().getFullYear()} Red Taxi Kotor &amp; Tivat. {t.footer.rights}</p>
-          {credits.length > 0 && <p className="max-w-xl sm:text-right">{t.footer.credits}: {credits.join(' · ')}</p>}
+          <div className="space-y-1.5 sm:text-right">
+            <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-white/60 sm:justify-end">
+              <span>{t.footer.photos} © <span className="font-semibold text-white/85">{PHOTOGRAPHER.name}</span></span>
+              {PHOTOGRAPHER.instagram && (
+                <a href={`https://www.instagram.com/${PHOTOGRAPHER.instagram}/`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-semibold text-white/85 hover:text-red">
+                  <InstagramIcon className="h-4 w-4" />@{PHOTOGRAPHER.instagram}
+                </a>
+              )}
+              <span>· {t.footer.photoRights}</span>
+            </p>
+            {credits.length > 0 && <p className="max-w-xl text-[11px] text-white/35 sm:ml-auto">{t.footer.morePhotos}: {credits.join(' · ')}</p>}
+          </div>
         </div>
       </div>
     </footer>

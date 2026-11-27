@@ -16,15 +16,15 @@ import { EXCURSIONS } from '../data/excursions'
 import { AIRPORT_TRANSFERS } from '../data/prices'
 
 const SERVICE_LINKS: { key: PageKey; img: ImageKey; icon: typeof Car; hash?: string }[] = [
-  { key: 'taxi', img: 'tivat', icon: Car },
+  { key: 'taxi', img: 'kotorNight', icon: Car },
   { key: 'airport', img: 'tivatAirport', icon: Plane },
-  { key: 'excursions', img: 'perast', icon: Mountain },
+  { key: 'excursions', img: 'gospa', icon: Mountain },
   { key: 'taxi', img: 'interior', icon: Briefcase },
 ]
 const DESTINATIONS: { to: string; img: ImageKey }[] = [
-  { to: 'Kotor Old Town', img: 'heroBay' },
-  { to: 'Kotor – Dobrota', img: 'dobrota' },
+  { to: 'Kotor Old Town', img: 'kotor' },
   { to: 'Perast', img: 'perastPanorama' },
+  { to: 'Budva', img: 'budva' },
   { to: 'Sveti Stefan', img: 'svetiStefan' },
 ]
 const WHY_ICONS = [Clock, ShieldCheck, MapPin, Car]

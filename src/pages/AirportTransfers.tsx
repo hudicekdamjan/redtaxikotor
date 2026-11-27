@@ -1,4 +1,4 @@
-import { ArrowRight, Car, Clock, Hotel, PlaneLanding, Ship, UserRound } from 'lucide-react'
+import { ArrowRight, Car, Clock, Hotel, Info, PlaneLanding, Ship, UserRound } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import BookingForm from '../components/BookingForm'
 import CtaBand from '../components/CtaBand'
@@ -51,6 +51,7 @@ export default function AirportTransfers() {
             <PriceCard title={p.routes.tivat} rows={AIRPORT_TRANSFERS} icon={<Plane className="h-6 w-6" aria-hidden="true" />} />
             <div className="space-y-6">
               <PriceCard title={p.routes.other} rows={INTERCITY_TRANSFERS} icon={<Car className="h-6 w-6" aria-hidden="true" />} />
+              <p className="flex items-start gap-2.5 rounded-xl bg-white p-4 text-sm leading-relaxed text-ink shadow-card ring-1 ring-black/5"><Info className="mt-0.5 h-4 w-4 shrink-0 text-red" aria-hidden="true" />{t.prices.croatiaNote}</p>
               <p className="text-sm text-stone">{t.common.allPricesEur}</p>
               <Link to={pathFor(lang, 'prices')} className="inline-flex items-center gap-2 font-semibold text-red hover:underline">{t.common.viewFullPriceList}<ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             </div>

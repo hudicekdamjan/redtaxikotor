@@ -18,7 +18,7 @@ export default function Excursions() {
   return (
     <>
       <Seo title={t.meta.excursions.title} description={t.meta.excursions.description} jsonLd={ld} />
-      <Hero eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} image="heroBay" />
+      <Hero eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} image="perastPanorama" />
       <section className="bg-mist py-20 sm:py-28">
         <Container>
           <SectionHeading eyebrow={t.nav.excursions} title={p.listTitle} subtitle={p.listSubtitle} />

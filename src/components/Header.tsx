@@ -95,7 +95,7 @@ export default function Header() {
               <ChevronDown className={`h-4 w-4 transition ${callOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
             </button>
             {callOpen && (
-              <div role="dialog" aria-label={t.common.callTaxi} className="absolute right-0 top-[calc(100%+10px)] w-[min(92vw,360px)] animate-rise rounded-2xl bg-white p-4 shadow-lift ring-1 ring-black/5">
+              <div role="dialog" aria-label={t.common.callTaxi} className="fixed inset-x-3 top-[80px] max-h-[calc(100dvh-96px)] animate-rise overflow-y-auto rounded-2xl bg-white p-4 shadow-lift ring-1 ring-black/5 sm:absolute sm:inset-x-auto sm:right-0 sm:top-[calc(100%+10px)] sm:max-h-none sm:w-[360px]">
                 <CallPanel onDone={() => setCallOpen(false)} />
               </div>
             )}

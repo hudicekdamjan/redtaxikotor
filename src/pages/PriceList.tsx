@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Car, Info, MapPin, Mountain, Plane } from 'lucide-react'
+import { ArrowRight, Car, Info, Mountain, Plane } from 'lucide-react'
 import ContactButtons from '../components/ContactButtons'
 import Hero from '../components/Hero'
 import PriceCard from '../components/PriceCard'
@@ -9,7 +9,12 @@ import { MUNICIPALITIES, MUNICIPALITY_IDS } from '../config/contacts'
 import { pathFor } from '../config/routes'
 import { useLang } from '../context/LangContext'
 import { EXCURSIONS } from '../data/excursions'
-import { AIRPORT_TRANSFERS, INTERCITY_TRANSFERS, LOCAL_TAXI } from '../data/prices'
+import { AIRPORT_TRANSFERS, INTERCITY_TRANSFERS } from '../data/prices'
+
+function CroatiaNote() {
+  const { t } = useLang()
+  return <p className="mb-5 flex items-start gap-2.5 rounded-xl bg-red/5 p-4 text-sm leading-relaxed text-ink ring-1 ring-red/15"><Info className="mt-0.5 h-4 w-4 shrink-0 text-red" aria-hidden="true" />{t.prices.croatiaNote}</p>
+}
 
 function CategoryCta() {
   const { t } = useLang()
@@ -32,7 +37,6 @@ export default function PriceList() {
   const { lang, t } = useLang()
   const p = t.prices
   const cats = [
-    { id: 'local', label: p.local.title, icon: MapPin },
     { id: 'airport', label: p.airport.title, icon: Plane },
     { id: 'intercity', label: p.intercity.title, icon: Car },
     { id: 'excursions', label: p.excursions.title, icon: Mountain },
@@ -54,29 +58,9 @@ export default function PriceList() {
 
       <section className="bg-mist py-16 sm:py-24">
         <Container className="space-y-8">
-          {/* Local taxi — tariffs not published on the current website: shown as "on request" */}
-          <section id="local" className="scroll-mt-40 overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-black/5">
-            <header className="flex items-center gap-4 border-b border-black/5 p-6 sm:p-8">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red text-white"><MapPin className="h-6 w-6" aria-hidden="true" /></span>
-              <div>
-                <h2 className="font-display text-2xl font-extrabold text-ink">{p.local.title}</h2>
-                <p className="mt-0.5 text-sm text-stone">{p.local.text}</p>
-              </div>
-            </header>
-            <ul className="grid divide-y divide-black/5 sm:grid-cols-2 sm:divide-y-0">
-              {LOCAL_TAXI.map((r) => (
-                <li key={r.key} className="flex items-center justify-between px-6 py-4 sm:border-b sm:border-black/5 sm:px-8 sm:odd:border-r">
-                  <span className="text-[15px] font-semibold text-ink">{p.local.rows[r.key]}</span>
-                  <span className="font-display text-lg font-extrabold text-red">{r.price === null ? t.common.priceOnRequest : `€${r.price}`}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="flex items-start gap-2 px-6 pt-5 text-sm text-stone sm:px-8"><Info className="mt-0.5 h-4 w-4 shrink-0 text-red" aria-hidden="true" />{p.local.note}</p>
-            <div className="mt-5 border-t border-black/5 bg-mist/60 p-6 sm:px-8"><CategoryCta /></div>
-          </section>
 
           <PriceCard id="airport" title={p.airport.title} text={p.airport.text} rows={AIRPORT_TRANSFERS} icon={<Plane className="h-6 w-6" aria-hidden="true" />} footer={<CategoryCta />} />
-          <PriceCard id="intercity" title={p.intercity.title} text={p.intercity.text} rows={INTERCITY_TRANSFERS} icon={<Car className="h-6 w-6" aria-hidden="true" />} footer={<CategoryCta />} />
+          <PriceCard id="intercity" title={p.intercity.title} text={p.intercity.text} rows={INTERCITY_TRANSFERS} icon={<Car className="h-6 w-6" aria-hidden="true" />} footer={<><CroatiaNote /><CategoryCta /></>} />
 
           <section id="excursions" className="scroll-mt-40 overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-black/5">
             <header className="flex items-center gap-4 border-b border-black/5 p-6 sm:p-8">

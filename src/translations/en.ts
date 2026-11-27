@@ -6,14 +6,14 @@ const en = {
         'Red Taxi – taxi service in Kotor (19719) and Tivat (19729). Tivat Airport transfers from €30, private transfers and excursions across Montenegro. Call, Viber or WhatsApp.',
     },
     taxi: {
-      title: 'Taxi Kotor & Taxi Tivat – Local Taxi Service | Red Taxi',
+      title: 'Taxi Kotor & Taxi Tivat – City and Intercity Taxi | Red Taxi',
       description:
-        'Local taxi in Kotor and Tivat municipalities. City, hotel, business and group rides with professional drivers. In Kotor call 19719, in Tivat call 19729.',
+        'Taxi from Kotor and Tivat — rides around town and to any city in Montenegro. Hotel, business and group transport with professional drivers. Kotor 19719, Tivat 19729.',
     },
     airport: {
       title: 'Tivat Airport Transfer & Kotor Airport Taxi | Red Taxi',
       description:
-        'Private Tivat Airport and Podgorica Airport transfers to Kotor, Budva, Perast, Herceg Novi and more. Published fixed route prices. Book on WhatsApp.',
+        'Private Tivat Airport and Podgorica Airport transfers to Kotor, Budva, Perast, Herceg Novi and more. Published fixed route prices. Book by email or WhatsApp.',
     },
     excursions: {
       title: 'Private Excursions from Kotor – Lovćen, Perast, Cetinje | Red Taxi',
@@ -87,8 +87,8 @@ const en = {
     question: 'Where are you located?',
     rule: 'Choose the municipality where you are physically located right now — not where you want to go.',
     ruleShort: 'Call the number of the municipality you are in now.',
-    kotorDesc: 'Taxi service for Kotor Municipality — Old Town, Dobrota, Muo, Prčanj, Risan, Perast and the rest of the municipality.',
-    tivatDesc: 'Taxi service for Tivat Municipality — Tivat town, Tivat Airport, Porto Montenegro, Luštica and the rest of the municipality.',
+    kotorDesc: 'Taxi based in Kotor Municipality — pickups in the Old Town, Dobrota, Muo, Prčanj, Risan and Perast; rides to Tivat, Budva and anywhere in Montenegro.',
+    tivatDesc: 'Taxi based in Tivat Municipality — pickups in Tivat, at Tivat Airport, Porto Montenegro and Luštica; rides to Kotor, Budva and anywhere in Montenegro.',
     callHotline: 'Call {n}',
     fromForeignSim: 'Calling from a foreign SIM? Use {m}',
     youAreIn: 'You are in',
@@ -107,7 +107,9 @@ const en = {
     contact: 'Contact',
     email: 'Email',
     rights: 'All rights reserved.',
-    credits: 'Photo credits',
+    photos: 'Photos',
+    morePhotos: 'Additional photos',
+    photoRights: 'All rights reserved',
   },
 
   home: {
@@ -123,7 +125,7 @@ const en = {
       eyebrow: 'What we do',
       title: 'Transportation for every journey',
       items: [
-        { title: 'Local taxi', text: 'Fast rides within Kotor and Tivat municipalities, day and night.' },
+        { title: 'Taxi Kotor & Tivat', text: 'Around town or to any city in Montenegro, day and night.' },
         { title: 'Airport transfers', text: 'Tivat and Podgorica airports — published fixed prices per route.' },
         { title: 'Private excursions', text: 'Lovćen, Perast, Cetinje, Sveti Stefan and Skadar Lake.' },
         { title: 'Business & events', text: 'Punctual transport for meetings, hotels and special occasions.' },
@@ -169,8 +171,8 @@ const en = {
   taxi: {
     hero: {
       eyebrow: 'Taxi services',
-      title: 'Local taxi in Kotor & Tivat',
-      subtitle: 'Quick, comfortable rides around the Bay of Kotor — from the Old Town to Tivat, hotels, beaches and marinas.',
+      title: 'Taxi in Kotor & Tivat',
+      subtitle: 'Comfortable rides from Kotor and Tivat — around town, between the two cities and to any destination in Montenegro.',
     },
     intro: {
       title: 'Two municipalities, two direct lines',
@@ -178,17 +180,17 @@ const en = {
     },
     kotor: {
       title: 'Taxi Kotor — 19719',
-      text: 'Covers Kotor Municipality: the Old Town, the cruise port area, Dobrota, Muo, Prčanj, Risan, Perast and surrounding villages.',
+      text: 'Picks you up anywhere in Kotor Municipality — the Old Town, the cruise port, Dobrota, Muo, Prčanj, Risan, Perast — and drives you to Tivat, Budva or any other city in Montenegro.',
     },
     tivat: {
       title: 'Taxi Tivat — 19729',
-      text: 'Covers Tivat Municipality: Tivat town centre, Tivat Airport, Porto Montenegro, Kalimanj, Donja Lastva and the Luštica side.',
+      text: 'Picks you up anywhere in Tivat Municipality — the town centre, Tivat Airport, Porto Montenegro, Kalimanj, Donja Lastva, Luštica — and drives you to Kotor, Budva or any other city in Montenegro.',
     },
     types: {
       eyebrow: 'Services',
       title: 'Every kind of ride',
       items: [
-        { title: 'City transportation', text: 'Short rides around town, to the beach, restaurants or the marina.' },
+        { title: 'City & intercity rides', text: 'Around town, between Kotor and Tivat, or to Budva, Herceg Novi, Podgorica and any other city in Montenegro.' },
         { title: 'Hotel transportation', text: 'Pickups and drop-offs at hotels, villas and apartments.' },
         { title: 'Business transportation', text: 'Reliable, discreet rides for meetings, conferences and corporate guests.' },
         { title: 'Group transportation', text: 'Travelling together? Tell us the number of passengers and we will arrange the cars.' },
@@ -235,13 +237,13 @@ const en = {
     book: {
       eyebrow: 'Booking',
       title: 'Book your transfer',
-      subtitle: 'Fill in the details and send the request directly to our dispatch on WhatsApp. We will confirm your booking in the chat.',
+      subtitle: 'Fill in the details and send the inquiry by email or WhatsApp — the message is prepared for you. We will confirm your booking.',
     },
   },
 
   form: {
     municipalityLabel: 'Where are you now?',
-    municipalityHint: 'Your request goes to the dispatch of the municipality you are in now.',
+    municipalityHint: 'So we can send the nearest car. WhatsApp requests go to the dispatch of this municipality.',
     pickup: 'Pickup location',
     pickupPh: 'e.g. Tivat Airport',
     destination: 'Destination',
@@ -249,6 +251,10 @@ const en = {
     date: 'Date',
     time: 'Time',
     passengers: 'Passengers',
+    passengersHint: 'Max 4 passengers per car. For 5 or more, a second vehicle is needed — mention it in Additional information.',
+    luggage: 'Luggage (pieces)',
+    luggagePh: 'Choose…',
+    luggageHint: 'Suitcases and bags — so we send the right car.',
     flight: 'Flight number',
     flightPh: 'e.g. JU 170',
     name: 'Full name',
@@ -262,6 +268,9 @@ const en = {
     message: 'Message',
     messagePh: 'How can we help?',
     submitWhatsApp: 'Send request on WhatsApp',
+    submitInquiry: 'Send inquiry by email',
+    emailTo: 'Opens your email app with the message ready for {e}',
+    whatsappInstead: 'Or send the same request on WhatsApp',
     submitEmail: 'Send by email',
     sendTo: 'Will be sent to Red Taxi {m} · {n}',
     errors: {
@@ -283,6 +292,7 @@ const en = {
       date: 'Date',
       time: 'Time',
       passengers: 'Passengers',
+      luggage: 'Luggage (pieces)',
       flight: 'Flight',
       name: 'Name',
       phone: 'Phone',
@@ -290,6 +300,7 @@ const en = {
       notes: 'Notes',
       message: 'Message',
       excursion: 'Excursion',
+      emailSubject: 'Transfer inquiry: {from} → {to}, {date} {time}',
     },
   },
 
@@ -346,7 +357,7 @@ const en = {
       duration: 'Duration',
       highlights: 'Highlights',
       book: 'Book this excursion',
-      bookText: 'Send us your preferred date, time and number of passengers. We will confirm the details on WhatsApp.',
+      bookText: 'Send us your preferred date, time and number of passengers. We will confirm the details by email or WhatsApp.',
       other: 'Other excursions',
       back: 'All excursions',
       note: 'Price per trip with a private Red Taxi car and driver.',
@@ -362,14 +373,9 @@ const en = {
     route: 'Route',
     price: 'Price',
     julyAugust: 'July–August',
-    local: {
-      title: 'Local taxi',
-      text: 'Rides within Kotor and Tivat municipalities.',
-      rows: { start: 'Start fare', perKm: 'Price per km', waiting: 'Waiting time (per hour)', night: 'Night tariff' },
-      note: 'Local tariffs are given on request — call the dispatch of the municipality you are in.',
-    },
     airport: { title: 'Airport transfers', text: 'Transfers from Tivat Airport.' },
     intercity: { title: 'Intercity transfers', text: 'Podgorica, Dubrovnik and other long-distance transfers.' },
+    croatiaNote: 'Transfers to Croatia: due to Croatian regulations, Montenegrin taxis cannot drive passengers in Croatia. In coordination with our partner taxi company from Dubrovnik, you switch to their car at the border crossing — we organise everything. The prices shown are total prices and include the Croatian part of the trip.',
     excursions: { title: 'Private excursions', text: 'Departures from Kotor.' },
     ctaTitle: 'Questions about a price?',
     ctaText: 'Contact the dispatch of the municipality you are in.',
@@ -437,7 +443,7 @@ const en = {
         },
         {
           q: 'How do I book an airport transfer?',
-          a: 'Use the booking form on the Airport Transfers page. It prepares a WhatsApp message with all the details; press send and our dispatch will confirm.',
+          a: 'Use the booking form on the Airport Transfers page. It prepares an email (or a WhatsApp message) with all the details; press send and our dispatch will confirm.',
         },
         {
           q: 'Should I include my flight number?',
@@ -445,7 +451,7 @@ const en = {
         },
         {
           q: 'Do you drive to Dubrovnik?',
-          a: 'Yes. Transfers to Dubrovnik and Dubrovnik Airport (Čilipi) are listed in our price list.',
+          a: 'Yes. Due to Croatian regulations, Montenegrin taxis cannot drive passengers in Croatia, so in coordination with our partner taxi company from Dubrovnik you switch to their car at the border crossing — we organise everything. The prices for Dubrovnik and Dubrovnik Airport (Čilipi) in our price list are total prices and already include the Croatian part of the journey.',
         },
       ],
     },

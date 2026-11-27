@@ -17,7 +17,7 @@ export default function TaxiServices() {
   return (
     <>
       <Seo title={t.meta.taxi.title} description={t.meta.taxi.description} jsonLd={breadcrumbLd([{ name: t.nav.home, path: pathFor(lang, 'home') }, { name: t.nav.taxi, path: pathFor(lang, 'taxi') }])} />
-      <Hero eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} image="heroBay">
+      <Hero eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} image="kotor">
         <a href="#lines" className="inline-flex h-14 items-center rounded-full bg-red px-8 text-sm font-bold uppercase tracking-wide text-white hover:bg-red-dark">{t.common.callTaxi}</a>
       </Hero>
 

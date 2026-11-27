@@ -41,15 +41,6 @@ export const INTERCITY_TRANSFERS: PriceRow[] = [
   { from: 'Kotor cable car (Žičara)', to: 'Kotor Old Town (harbour)', price: 15, seasonal: { price: 20, label: 'julyAugust' } },
 ]
 
-/** Local taxi tariffs are NOT published on the current website — placeholders, fill in when confirmed. */
-export interface LocalTariff { key: 'start' | 'perKm' | 'waiting' | 'night'; price: number | null; unit?: string }
-export const LOCAL_TAXI: LocalTariff[] = [
-  { key: 'start', price: null },
-  { key: 'perKm', price: null },
-  { key: 'waiting', price: null },
-  { key: 'night', price: null },
-]
-
 /** Display names for place names in Montenegrin (proper nouns otherwise unchanged). */
 export const PLACE_ME: Record<string, string> = {
   'Tivat Airport': 'Aerodrom Tivat',

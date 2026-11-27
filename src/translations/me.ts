@@ -8,14 +8,14 @@ const me: Dict = {
         'Red Taxi – taxi služba u Kotoru (19719) i Tivtu (19729). Transferi sa aerodroma Tivat od 30 €, privatni transferi i izleti širom Crne Gore. Poziv, Viber ili WhatsApp.',
     },
     taxi: {
-      title: 'Taxi Kotor i Taxi Tivat – lokalni taxi prevoz | Red Taxi',
+      title: 'Taxi Kotor i Taxi Tivat – gradski i međugradski taxi | Red Taxi',
       description:
-        'Lokalni taxi u opštinama Kotor i Tivat. Gradske vožnje, hoteli, poslovni i grupni prevoz uz profesionalne vozače. U Kotoru 19719, u Tivtu 19729.',
+        'Taxi iz Kotora i Tivta — vožnje po gradu i do bilo kog grada u Crnoj Gori. Hoteli, poslovni i grupni prevoz uz profesionalne vozače. Kotor 19719, Tivat 19729.',
     },
     airport: {
       title: 'Transfer aerodrom Tivat i aerodrom Podgorica | Red Taxi',
       description:
-        'Privatni transferi sa aerodroma Tivat i Podgorica do Kotora, Budve, Perasta, Herceg Novog i drugih mjesta. Objavljene cijene po relaciji. Rezervacija putem WhatsApp-a.',
+        'Privatni transferi sa aerodroma Tivat i Podgorica do Kotora, Budve, Perasta, Herceg Novog i drugih mjesta. Objavljene cijene po relaciji. Rezervacija emailom ili putem WhatsApp-a.',
     },
     excursions: {
       title: 'Privatni izleti iz Kotora – Lovćen, Perast, Cetinje | Red Taxi',
@@ -89,8 +89,8 @@ const me: Dict = {
     question: 'U kojoj opštini se nalazite?',
     rule: 'Izaberite opštinu u kojoj se trenutno fizički nalazite — ne onu u koju želite da idete.',
     ruleShort: 'Pozovite broj opštine u kojoj se sada nalazite.',
-    kotorDesc: 'Taxi služba za opštinu Kotor — Stari grad, Dobrota, Muo, Prčanj, Risan, Perast i ostatak opštine.',
-    tivatDesc: 'Taxi služba za opštinu Tivat — grad Tivat, aerodrom Tivat, Porto Montenegro, Luštica i ostatak opštine.',
+    kotorDesc: 'Taxi iz opštine Kotor — preuzimanje u Starom gradu, Dobroti, Muu, Prčanju, Risnu i Perastu; vožnje do Tivta, Budve i bilo kog mjesta u Crnoj Gori.',
+    tivatDesc: 'Taxi iz opštine Tivat — preuzimanje u Tivtu, na aerodromu Tivat, u Porto Montenegru i na Luštici; vožnje do Kotora, Budve i bilo kog mjesta u Crnoj Gori.',
     callHotline: 'Pozovi {n}',
     fromForeignSim: 'Zovete sa strane SIM kartice? Pozovite {m}',
     youAreIn: 'Nalazite se u',
@@ -109,7 +109,9 @@ const me: Dict = {
     contact: 'Kontakt',
     email: 'Email',
     rights: 'Sva prava zadržana.',
-    credits: 'Autori fotografija',
+    photos: 'Fotografije',
+    morePhotos: 'Dodatne fotografije',
+    photoRights: 'Sva prava zaštićena',
   },
 
   home: {
@@ -125,7 +127,7 @@ const me: Dict = {
       eyebrow: 'Naše usluge',
       title: 'Prevoz za svako putovanje',
       items: [
-        { title: 'Lokalni taxi', text: 'Brze vožnje u opštinama Kotor i Tivat, danju i noću.' },
+        { title: 'Taxi Kotor i Tivat', text: 'Po gradu ili do bilo kog grada u Crnoj Gori, danju i noću.' },
         { title: 'Aerodromski transferi', text: 'Aerodromi Tivat i Podgorica — unaprijed objavljene cijene po relaciji.' },
         { title: 'Privatni izleti', text: 'Lovćen, Perast, Cetinje, Sveti Stefan i Skadarsko jezero.' },
         { title: 'Poslovni prevoz i događaji', text: 'Tačan prevoz za sastanke, hotele i posebne prilike.' },
@@ -171,8 +173,8 @@ const me: Dict = {
   taxi: {
     hero: {
       eyebrow: 'Taxi usluge',
-      title: 'Lokalni taxi u Kotoru i Tivtu',
-      subtitle: 'Brze i udobne vožnje oko Bokokotorskog zaliva — od Starog grada do Tivta, hotela, plaža i marina.',
+      title: 'Taxi u Kotoru i Tivtu',
+      subtitle: 'Udobne vožnje iz Kotora i Tivta — po gradu, između ova dva grada i do bilo kog odredišta u Crnoj Gori.',
     },
     intro: {
       title: 'Dvije opštine, dvije direktne linije',
@@ -180,17 +182,17 @@ const me: Dict = {
     },
     kotor: {
       title: 'Taxi Kotor — 19719',
-      text: 'Pokriva opštinu Kotor: Stari grad, zonu kruzerskog pristaništa, Dobrotu, Muo, Prčanj, Risan, Perast i okolna mjesta.',
+      text: 'Preuzima vas bilo gdje u opštini Kotor — Stari grad, kruzersko pristanište, Dobrota, Muo, Prčanj, Risan, Perast — i vozi do Tivta, Budve ili bilo kog drugog grada u Crnoj Gori.',
     },
     tivat: {
       title: 'Taxi Tivat — 19729',
-      text: 'Pokriva opštinu Tivat: centar Tivta, aerodrom Tivat, Porto Montenegro, Kalimanj, Donju Lastvu i stranu prema Luštici.',
+      text: 'Preuzima vas bilo gdje u opštini Tivat — centar grada, aerodrom Tivat, Porto Montenegro, Kalimanj, Donja Lastva, Luštica — i vozi do Kotora, Budve ili bilo kog drugog grada u Crnoj Gori.',
     },
     types: {
       eyebrow: 'Usluge',
       title: 'Svaka vrsta vožnje',
       items: [
-        { title: 'Gradski prevoz', text: 'Kratke vožnje po gradu, do plaže, restorana ili marine.' },
+        { title: 'Gradske i međugradske vožnje', text: 'Po gradu, između Kotora i Tivta, ili do Budve, Herceg Novog, Podgorice i bilo kog drugog grada u Crnoj Gori.' },
         { title: 'Prevoz do hotela', text: 'Dolazak i odvoz iz hotela, vila i apartmana.' },
         { title: 'Poslovni prevoz', text: 'Pouzdane i diskretne vožnje za sastanke, konferencije i poslovne goste.' },
         { title: 'Grupni prevoz', text: 'Putujete zajedno? Javite nam broj putnika i organizovaćemo vozila.' },
@@ -237,13 +239,13 @@ const me: Dict = {
     book: {
       eyebrow: 'Rezervacija',
       title: 'Rezervišite transfer',
-      subtitle: 'Popunite podatke i pošaljite zahtjev direktno našoj centrali putem WhatsApp-a. Rezervaciju ćemo potvrditi u poruci.',
+      subtitle: 'Popunite podatke i pošaljite upit emailom ili putem WhatsApp-a — poruka je već pripremljena. Rezervaciju ćemo potvrditi.',
     },
   },
 
   form: {
     municipalityLabel: 'Gdje se sada nalazite?',
-    municipalityHint: 'Zahtjev se šalje centrali opštine u kojoj se sada nalazite.',
+    municipalityHint: 'Da vam pošaljemo najbliže vozilo. WhatsApp zahtjev ide centrali ove opštine.',
     pickup: 'Mjesto polaska',
     pickupPh: 'npr. Aerodrom Tivat',
     destination: 'Odredište',
@@ -251,6 +253,10 @@ const me: Dict = {
     date: 'Datum',
     time: 'Vrijeme',
     passengers: 'Broj putnika',
+    passengersHint: 'Najviše 4 putnika po vozilu. Za 5 i više putnika potrebno je drugo vozilo — navedite to u dodatnim informacijama.',
+    luggage: 'Prtljag (broj komada)',
+    luggagePh: 'Izaberite…',
+    luggageHint: 'Koferi i torbe — da pošaljemo odgovarajuće vozilo.',
     flight: 'Broj leta',
     flightPh: 'npr. JU 170',
     name: 'Ime i prezime',
@@ -264,6 +270,9 @@ const me: Dict = {
     message: 'Poruka',
     messagePh: 'Kako vam možemo pomoći?',
     submitWhatsApp: 'Pošaljite zahtjev na WhatsApp',
+    submitInquiry: 'Pošaljite upit emailom',
+    emailTo: 'Otvara vašu email aplikaciju sa spremnom porukom za {e}',
+    whatsappInstead: 'Ili pošaljite isti zahtjev na WhatsApp',
     submitEmail: 'Pošaljite email',
     sendTo: 'Šalje se na Red Taxi {m} · {n}',
     errors: {
@@ -285,6 +294,7 @@ const me: Dict = {
       date: 'Datum',
       time: 'Vrijeme',
       passengers: 'Putnika',
+      luggage: 'Prtljag (komada)',
       flight: 'Let',
       name: 'Ime',
       phone: 'Telefon',
@@ -292,6 +302,7 @@ const me: Dict = {
       notes: 'Napomena',
       message: 'Poruka',
       excursion: 'Izlet',
+      emailSubject: 'Upit za transfer: {from} → {to}, {date} {time}',
     },
   },
 
@@ -348,7 +359,7 @@ const me: Dict = {
       duration: 'Trajanje',
       highlights: 'Izdvajamo',
       book: 'Rezervišite izlet',
-      bookText: 'Pošaljite nam željeni datum, vrijeme i broj putnika. Detalje ćemo potvrditi putem WhatsApp-a.',
+      bookText: 'Pošaljite nam željeni datum, vrijeme i broj putnika. Detalje ćemo potvrditi emailom ili putem WhatsApp-a.',
       other: 'Ostali izleti',
       back: 'Svi izleti',
       note: 'Cijena po vožnji, sa privatnim Red Taxi vozilom i vozačem.',
@@ -364,14 +375,9 @@ const me: Dict = {
     route: 'Relacija',
     price: 'Cijena',
     julyAugust: 'Jul–avgust',
-    local: {
-      title: 'Lokalni taxi',
-      text: 'Vožnje unutar opština Kotor i Tivat.',
-      rows: { start: 'Start', perKm: 'Cijena po km', waiting: 'Čekanje (po satu)', night: 'Noćna tarifa' },
-      note: 'Lokalne tarife dostupne su na upit — pozovite centralu opštine u kojoj se nalazite.',
-    },
     airport: { title: 'Aerodromski transferi', text: 'Transferi sa aerodroma Tivat.' },
     intercity: { title: 'Međugradski transferi', text: 'Podgorica, Dubrovnik i drugi duži transferi.' },
+    croatiaNote: 'Transferi u Hrvatsku: zbog hrvatskih propisa crnogorski taxi ne može da vozi putnike u Hrvatskoj. U koordinaciji sa našom partnerskom taxi kompanijom iz Dubrovnika, na graničnom prelazu prelazite u njihovo vozilo — sve organizujemo mi. Prikazane cijene su ukupne i uključuju i hrvatski dio puta.',
     excursions: { title: 'Privatni izleti', text: 'Polasci iz Kotora.' },
     ctaTitle: 'Imate pitanje o cijeni?',
     ctaText: 'Kontaktirajte centralu opštine u kojoj se nalazite.',
@@ -439,7 +445,7 @@ const me: Dict = {
         },
         {
           q: 'Kako da rezervišem aerodromski transfer?',
-          a: 'Koristite formular na stranici Aerodromski transferi. On priprema WhatsApp poruku sa svim podacima; pritisnite „pošalji” i naša centrala će potvrditi rezervaciju.',
+          a: 'Koristite formular na stranici Aerodromski transferi. On priprema email (ili WhatsApp poruku) sa svim podacima; pritisnite „pošalji” i naša centrala će potvrditi rezervaciju.',
         },
         {
           q: 'Da li da navedem broj leta?',
@@ -447,7 +453,7 @@ const me: Dict = {
         },
         {
           q: 'Da li vozite do Dubrovnika?',
-          a: 'Da. Transferi do Dubrovnika i aerodroma Dubrovnik (Čilipi) nalaze se u našem cjenovniku.',
+          a: 'Da. Zbog hrvatskih propisa crnogorski taxi ne može da vozi putnike u Hrvatskoj, pa u koordinaciji sa našom partnerskom taxi kompanijom iz Dubrovnika na graničnom prelazu prelazite u njihovo vozilo — sve organizujemo mi. Cijene za Dubrovnik i aerodrom Dubrovnik (Čilipi) u našem cjenovniku su ukupne i već uključuju i hrvatski dio puta.',
         },
       ],
     },

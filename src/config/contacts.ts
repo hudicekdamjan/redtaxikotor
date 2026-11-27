@@ -40,6 +40,9 @@ export const MUNICIPALITY_IDS: MunicipalityId[] = ['kotor', 'tivat']
 
 export const EMAIL = 'redtaxikotor@gmail.com'
 
+/** Transfer / excursion inquiries from the booking form are addressed to this email. */
+export const BOOKING_EMAIL = EMAIL
+
 /** tel: link for the short hotline */
 export const telHotline = (m: Municipality) => `tel:${m.hotline}`
 /** tel: link for the full mobile number (works from foreign SIM cards) */

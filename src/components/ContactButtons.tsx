@@ -6,15 +6,17 @@ import { ViberIcon, WhatsAppIcon } from './BrandIcons'
 
 type Variant = 'large' | 'compact' | 'icon'
 
-const base = 'inline-flex items-center justify-center gap-2 font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+const base = 'inline-flex min-w-0 items-center justify-center font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
 const styles = {
   call: 'bg-red text-white hover:bg-red-dark focus-visible:outline-red',
   viber: 'bg-viber text-white hover:brightness-110 focus-visible:outline-viber',
   whatsapp: 'bg-whatsapp text-white hover:brightness-110 focus-visible:outline-whatsapp',
 }
 const sizes: Record<Variant, string> = {
-  large: 'h-14 rounded-xl px-4 text-[15px] w-full',
-  compact: 'h-11 rounded-lg px-3 text-sm w-full',
+  // Phones: icon above the label so "WhatsApp" fits three-in-a-row; wider screens: side by side.
+  large: 'h-14 w-full flex-col gap-1 rounded-xl px-1 text-[12px] leading-none sm:flex-row sm:gap-2 sm:px-4 sm:text-[15px]',
+  // Compact (call dropdown, contact bands): always icon above label — the buttons are narrow everywhere.
+  compact: 'h-14 w-full flex-col gap-1 rounded-lg px-1 text-[12px] leading-none',
   icon: 'h-10 w-10 rounded-lg',
 }
 
@@ -24,7 +26,7 @@ export default function ContactButtons({ id, variant = 'large', message, classNa
   const { select } = useMunicipality()
   const m = MUNICIPALITIES[id]
   const name = t.common[id]
-  const iconCls = variant === 'large' ? 'h-5 w-5' : 'h-[18px] w-[18px]'
+  const iconCls = `shrink-0 ${variant === 'large' ? 'h-5 w-5' : 'h-[18px] w-[18px]'}`
   const label = (s: string) => (variant === 'icon' ? <span className="sr-only">{s}</span> : <span>{s}</span>)
   const remember = () => select(id)
   return (

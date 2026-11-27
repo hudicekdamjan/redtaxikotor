@@ -15,7 +15,7 @@ export default function Contact() {
   return (
     <>
       <Seo title={t.meta.contact.title} description={t.meta.contact.description} jsonLd={[...localBusinessLd(lang), faqLd, breadcrumbLd([{ name: t.nav.home, path: pathFor(lang, 'home') }, { name: t.nav.contact, path: pathFor(lang, 'contact') }])]} />
-      <Hero eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} image="heroBay" />
+      <Hero eyebrow={p.hero.eyebrow} title={p.hero.title} subtitle={p.hero.subtitle} image="perast" />
       <LocationSection id="locations" tone="light" withMap />
 
       <section id="message" className="scroll-mt-20 bg-ink py-20 sm:py-28">
