@@ -15,7 +15,7 @@ const me: Dict = {
     airport: {
       title: 'Transfer aerodrom Tivat i aerodrom Podgorica | Red Taxi',
       description:
-        'Privatni transferi sa aerodroma Tivat i Podgorica do Kotora, Budve, Perasta, Herceg Novog i drugih mjesta. Objavljene cijene po relaciji. Rezervacija emailom ili putem WhatsApp-a.',
+        'Privatni transferi sa aerodroma Tivat i Podgorica do Kotora, Budve, Perasta, Herceg Novog i drugih mjesta. Objavljene cijene po relaciji. Rezervacija online, emailom.',
     },
     excursions: {
       title: 'Privatni izleti iz Kotora – Lovćen, Perast, Cetinje | Red Taxi',
@@ -239,13 +239,13 @@ const me: Dict = {
     book: {
       eyebrow: 'Rezervacija',
       title: 'Rezervišite transfer',
-      subtitle: 'Popunite podatke i pošaljite upit emailom ili putem WhatsApp-a — poruka je već pripremljena. Rezervaciju ćemo potvrditi.',
+      subtitle: 'Popunite podatke i pošaljite upit emailom — poruka je već pripremljena. Rezervaciju ćemo potvrditi.',
     },
   },
 
   form: {
     municipalityLabel: 'Gdje se sada nalazite?',
-    municipalityHint: 'Da vam pošaljemo najbliže vozilo. WhatsApp zahtjev ide centrali ove opštine.',
+    municipalityHint: 'Da vam pošaljemo najbliže vozilo.',
     pickup: 'Mjesto polaska',
     pickupPh: 'npr. Aerodrom Tivat',
     destination: 'Odredište',
@@ -256,9 +256,10 @@ const me: Dict = {
     passengersHint: 'Najviše 4 putnika po vozilu. Za 5 i više putnika potrebno je drugo vozilo — navedite to u dodatnim informacijama.',
     luggage: 'Prtljag (broj komada)',
     luggagePh: 'Izaberite…',
-    luggageHint: 'Koferi i torbe — da pošaljemo odgovarajuće vozilo.',
+    luggageHint: 'Koferi i torbe, najviše 6 po vozilu — da pošaljemo odgovarajuće vozilo.',
     flight: 'Broj leta',
     flightPh: 'npr. JU 170',
+    flightHint: 'Obavezno za aerodromske transfere — da preuzimanje uskladimo sa vašim letom.',
     name: 'Ime i prezime',
     namePh: 'Vaše ime',
     phone: 'Broj telefona',
@@ -273,28 +274,30 @@ const me: Dict = {
     submitInquiry: 'Pošaljite upit',
     submitInquiryMailApp: 'Pošaljite upit emailom',
     emailTo: 'Otvara vašu email aplikaciju sa spremnom porukom za {e}',
+    whyMailApp: 'Zašto preko vaše email aplikacije? Upit šaljete sa svoje email adrese, pa naš odgovor stiže direktno u vaš inbox — ne u spam — i nijedna rezervacija se ne gubi niti zaboravlja.',
     emailDirect: 'Šalje se direktno Red Taxi-ju ({e})',
     sending: 'Šalje se…',
     sentTitle: 'Hvala! Vaš upit je poslat.',
     sentText: 'Red Taxi će vas uskoro kontaktirati telefonom ili emailom radi potvrde.',
     newInquiry: 'Pošaljite novi upit',
-    sendError: 'Nažalost, upit nije poslat. Pokušajte ponovo — ili ga pošaljite iz svoje email aplikacije ili putem WhatsApp-a.',
+    sendError: 'Nažalost, upit nije poslat. Pokušajte ponovo — ili ga pošaljite iz svoje email aplikacije.',
     openMailApp: 'Otvori u mojoj email aplikaciji',
     emailHint: 'da vam možemo odgovoriti emailom',
     privacyDirect: 'Upit se šalje emailom Red Taxi-ju putem servisa FormSubmit i ne čuva se na ovom sajtu.',
     whatsappInstead: 'Ili pošaljite isti zahtjev na WhatsApp',
-    submitEmail: 'Pošaljite email',
+    submitEmail: 'Pošaljite poruku emailom',
     sendTo: 'Šalje se na Red Taxi {m} · {n}',
     errors: {
       municipality: 'Izaberite opštinu u kojoj se nalazite.',
       required: 'Ovo polje je obavezno.',
       phone: 'Unesite ispravan broj telefona.',
+      flight: 'Unesite ispravan broj leta, npr. JU 170.',
       email: 'Unesite ispravnu email adresu.',
       datePast: 'Izaberite datum u budućnosti.',
     },
     success: 'WhatsApp se otvara sa vašim zahtjevom. Pritisnite „pošalji” u WhatsApp-u da ga dostavite.',
     successEmail: 'Vaša email aplikacija se otvara sa porukom. Pritisnite „pošalji” da je dostavite.',
-    privacy: 'Ovaj sajt ne čuva vaše podatke — poruka se šalje direktno putem WhatsApp-a ili vaše email aplikacije.',
+    privacy: 'Ovaj sajt ne čuva vaše podatke — poruka se šalje iz vaše email aplikacije.',
     msg: {
       bookingTitle: 'Zahtjev za transfer – Red Taxi',
       contactTitle: 'Poruka – Red Taxi sajt',
@@ -370,7 +373,7 @@ const me: Dict = {
       duration: 'Trajanje',
       highlights: 'Izdvajamo',
       book: 'Rezervišite izlet',
-      bookText: 'Pošaljite nam željeni datum, vrijeme i broj putnika. Detalje ćemo potvrditi emailom ili putem WhatsApp-a.',
+      bookText: 'Pošaljite nam željeni datum, vrijeme i broj putnika. Detalje ćemo potvrditi emailom.',
       other: 'Ostali izleti',
       back: 'Svi izleti',
       note: 'Cijena po vožnji, sa privatnim Red Taxi vozilom i vozačem.',
@@ -437,7 +440,7 @@ const me: Dict = {
     tivatArea: 'Opština Tivat, Crna Gora',
     form: {
       title: 'Pošaljite nam poruku',
-      subtitle: 'Za pitanja, grupne rezervacije ili utiske. Pošaljite putem WhatsApp-a odgovarajućoj centrali ili emailom.',
+      subtitle: 'Za pitanja, grupne rezervacije ili utiske. Poruka se šalje iz vaše email aplikacije na redtaxikotor@gmail.com.',
     },
     faq: {
       title: 'Najčešća pitanja',
@@ -456,7 +459,11 @@ const me: Dict = {
         },
         {
           q: 'Kako da rezervišem aerodromski transfer?',
-          a: 'Koristite formular na stranici Aerodromski transferi. On priprema email (ili WhatsApp poruku) sa svim podacima; pritisnite „pošalji” i naša centrala će potvrditi rezervaciju.',
+          a: 'Koristite formular na stranici Aerodromski transferi. On priprema email sa svim podacima; pritisnite „pošalji” i naša centrala će potvrditi rezervaciju.',
+        },
+        {
+          q: 'Zašto formular za rezervaciju otvara moju email aplikaciju?',
+          a: 'Namjerno. Upit šaljete sa svoje email adrese, pa kada potvrdimo rezervaciju, naš odgovor stiže u vaš inbox kao nastavak iste prepiske — ne u spam. Tako nijedna poruka ne ostane neviđena i nijedna rezervacija se ne zaboravi.',
         },
         {
           q: 'Da li da navedem broj leta?',

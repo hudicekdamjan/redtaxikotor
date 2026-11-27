@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { AlertCircle, CheckCircle2, Loader2, Lock, Mail, Send } from 'lucide-react'
-import { WhatsAppIcon } from './BrandIcons'
-import { BOOKING_EMAIL, FORM_ENDPOINT, INQUIRY_DELIVERY, MUNICIPALITIES, whatsappLink, type MunicipalityId } from '../config/contacts'
+import { AlertCircle, CheckCircle2, Info, Loader2, Lock, Mail, Send } from 'lucide-react'
+import { BOOKING_EMAIL, FORM_ENDPOINT, INQUIRY_DELIVERY, MUNICIPALITIES, type MunicipalityId } from '../config/contacts'
 import { DICTS, fmt, useLang } from '../context/LangContext'
 import { useMunicipality } from '../context/MunicipalityContext'
 import Field, { inputCls } from './Field'
@@ -12,17 +11,22 @@ const empty: Values = { pickup: '', destination: '', date: '', time: '', passeng
 const today = () => new Date().toISOString().slice(0, 10)
 export const PHONE_RE = /^\+?[\d\s()./-]{6,20}$/
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+/** Pickup or destination is an airport → flight number becomes required. */
+const AIRPORT_RE = /aerodrom|airport|flughafen|lotnisko|a[eé]roport|aeroporto|čilipi|cilipi/i
+/** Airline code (2 letters/digits) + 1–4 digits, optional letter: JU 170, W6 4321, 4O123A */
+const FLIGHT_RE = /^[a-z0-9]{2}\s?\d{1,4}[a-z]?$/i
 /** A human needs more than this to fill in the form; faster submissions are treated as bots. */
 const MIN_FILL_MS = 4000
 const fmtDate = (d: string) => d.split('-').reverse().join('.')
 
-type Status = 'idle' | 'sending' | 'sent' | 'error' | 'email' | 'whatsapp'
+type Status = 'idle' | 'sending' | 'sent' | 'error' | 'email'
 
 /**
  * Transfer / excursion booking.
  *  - Email: sent directly to Red Taxi via FormSubmit (INQUIRY_DELIVERY = 'direct'),
  *    or opened in the visitor's email app with the message ready ('mailapp').
- *  - WhatsApp: the same request to the dispatch of the municipality the customer is CURRENTLY in.
+
+ * Inquiries are email-only: the phone line (WhatsApp/Viber) is reserved for taxi calls.
  * Bot protection for direct sending: hidden honeypot field + minimum fill time.
  */
 export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }: { defaults?: Partial<Values>; excursionName?: string; idPrefix?: string }) {
@@ -34,8 +38,13 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
   const [status, setStatus] = useState<Status>('idle')
   const [startedAt, setStartedAt] = useState(() => Date.now())
   const [honey, setHoney] = useState('')
-  const set = (k: keyof Values) => (e: { target: { value: string } }) => setV((p) => ({ ...p, [k]: e.target.value }))
+  const set = (k: keyof Values) => (e: { target: { value: string } }) => {
+    setV((p) => ({ ...p, [k]: e.target.value }))
+    // Clear that field's error as soon as the guest starts fixing it
+    setErrors((er) => (er[k] ? { ...er, [k]: undefined } : er))
+  }
   const effectiveMuni = muni ?? selected
+  const isAirport = AIRPORT_RE.test(v.pickup) || AIRPORT_RE.test(v.destination)
 
   function validate() {
     const e: typeof errors = {}
@@ -44,6 +53,8 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
     if (v.phone && !PHONE_RE.test(v.phone.trim())) e.phone = t.form.errors.phone
     if (v.date && v.date < today()) e.date = t.form.errors.datePast
     if (v.email && !EMAIL_RE.test(v.email.trim())) e.email = t.form.errors.email
+    if (isAirport && !v.flight.trim()) e.flight = t.form.errors.required
+    else if (v.flight.trim() && !FLIGHT_RE.test(v.flight.trim())) e.flight = t.form.errors.flight
     setErrors(e)
     const ok = Object.keys(e).length === 0
     if (!ok) requestAnimationFrame(() => document.querySelector<HTMLElement>(`#${idPrefix}-form [role="alert"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' }))
@@ -100,6 +111,8 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
       [L.language]: t === DICTS.me ? 'Crnogorski' : 'Engleski (English)',
     }
     setStatus('sending')
+    // Single-file preview build: simulate sending, never contact the real service.
+    if (import.meta.env.VITE_SINGLE) { await new Promise((r) => setTimeout(r, 900)); setStatus('sent'); return }
     try {
       const res = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
       const data = (await res.json().catch(() => ({}))) as { success?: string | boolean }
@@ -121,16 +134,6 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
     setStatus('email')
   }
 
-  /** Opens WhatsApp with the same request, to the dispatch of the municipality the customer is in. */
-  function sendWhatsApp() {
-    if (!validate() || !effectiveMuni) return
-    const text = `*${t.form.msg.bookingTitle}*\n${message(effectiveMuni)}`
-    select(effectiveMuni)
-    const url = whatsappLink(MUNICIPALITIES[effectiveMuni], text)
-    if (!window.open(url, '_blank', 'noopener')) window.location.href = url
-    setStatus('whatsapp')
-  }
-
   const err = (k: keyof Values) => errors[k]
   const aria = (k: keyof Values) => ({ 'aria-invalid': !!err(k) || undefined, 'aria-describedby': err(k) ? `${idPrefix}-${k}-err` : undefined })
 
@@ -148,11 +151,11 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
   const direct = INQUIRY_DELIVERY === 'direct'
   return (
     <form id={`${idPrefix}-form`} noValidate onSubmit={direct ? sendDirect : sendEmail} className="space-y-5">
-      {/* Honeypot: invisible to people, bots fill it in */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+      {/* Honeypot (direct sending only): invisible to people, bots fill it in */}
+      {direct && <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={`${idPrefix}-website`}>Website</label>
         <input id={`${idPrefix}-website`} name="_honey" type="text" tabIndex={-1} autoComplete="off" value={honey} onChange={(e) => setHoney(e.target.value)} />
-      </div>
+      </div>}
       <MunicipalityPicker name={`${idPrefix}-muni`} value={effectiveMuni} onChange={(id) => { setMuni(id); setErrors((e) => ({ ...e, muni: undefined })) }} error={errors.muni} />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={t.form.pickup} htmlFor={`${idPrefix}-pickup`} required error={err('pickup')}>
@@ -175,11 +178,11 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
         <Field label={t.form.luggage} htmlFor={`${idPrefix}-luggage`} required error={err('luggage')} hint={t.form.luggageHint}>
           <select id={`${idPrefix}-luggage`} className={inputCls} value={v.luggage} onChange={set('luggage')} {...aria('luggage')}>
             <option value="" disabled className="bg-ink text-white">{t.form.luggagePh}</option>
-            {['0', '1', '2', '3', '4', '5', '6', '7', '8', '8+'].map((n) => <option key={n} value={n} className="bg-ink text-white">{n}</option>)}
+            {['0', '1', '2', '3', '4', '5', '6'].map((n) => <option key={n} value={n} className="bg-ink text-white">{n}</option>)}
           </select>
         </Field>
-        <Field label={t.form.flight} htmlFor={`${idPrefix}-flight`} optionalLabel={t.common.optional}>
-          <input id={`${idPrefix}-flight`} className={inputCls} placeholder={t.form.flightPh} value={v.flight} onChange={set('flight')} autoComplete="off" />
+        <Field label={t.form.flight} htmlFor={`${idPrefix}-flight`} required={isAirport} optionalLabel={t.common.optional} error={err('flight')} hint={isAirport ? t.form.flightHint : undefined}>
+          <input id={`${idPrefix}-flight`} className={inputCls} placeholder={t.form.flightPh} value={v.flight} onChange={set('flight')} autoComplete="off" autoCapitalize="characters" {...aria('flight')} />
         </Field>
         <Field label={t.form.name} htmlFor={`${idPrefix}-name`} required error={err('name')}>
           <input id={`${idPrefix}-name`} className={inputCls} placeholder={t.form.namePh} value={v.name} onChange={set('name')} autoComplete="name" {...aria('name')} />
@@ -187,9 +190,9 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
         <Field label={t.form.phone} htmlFor={`${idPrefix}-phone`} required error={err('phone')}>
           <input id={`${idPrefix}-phone`} type="tel" inputMode="tel" className={inputCls} placeholder={t.form.phonePh} value={v.phone} onChange={set('phone')} autoComplete="tel" {...aria('phone')} />
         </Field>
-        <Field label={t.form.email} htmlFor={`${idPrefix}-email`} optionalLabel={t.form.emailHint} error={err('email')} className="sm:col-span-2">
+        {direct && <Field label={t.form.email} htmlFor={`${idPrefix}-email`} optionalLabel={t.form.emailHint} error={err('email')} className="sm:col-span-2">
           <input id={`${idPrefix}-email`} type="email" inputMode="email" className={inputCls} placeholder={t.form.emailPh} value={v.email} onChange={set('email')} autoComplete="email" {...aria('email')} />
-        </Field>
+        </Field>}
         <Field label={t.form.notes} htmlFor={`${idPrefix}-notes`} optionalLabel={t.common.optional} className="sm:col-span-2">
           <textarea id={`${idPrefix}-notes`} rows={3} className={`${inputCls} h-auto py-3`} placeholder={t.form.notesPh} value={v.notes} onChange={set('notes')} />
         </Field>
@@ -200,6 +203,7 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
         {status === 'sending' ? t.form.sending : direct ? t.form.submitInquiry : t.form.submitInquiryMailApp}
       </button>
       <p className="text-center text-xs text-white/55">{fmt(direct ? t.form.emailDirect : t.form.emailTo, { e: BOOKING_EMAIL })}</p>
+      {!direct && <p className="flex items-start gap-2.5 rounded-xl bg-white/5 p-3.5 text-xs leading-relaxed text-white/75 ring-1 ring-white/10"><Info className="mt-0.5 h-4 w-4 shrink-0 text-red" aria-hidden="true" />{t.form.whyMailApp}</p>}
       {status === 'error' && (
         <div role="alert" className="rounded-xl bg-red/15 p-4 text-sm text-white">
           <p className="flex items-start gap-2"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red" aria-hidden="true" />{t.form.sendError}</p>
@@ -207,13 +211,6 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
         </div>
       )}
       {status === 'email' && <p role="status" className="flex items-start gap-2 rounded-xl bg-white/10 p-3 text-sm text-white"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-whatsapp" aria-hidden="true" />{t.form.successEmail}</p>}
-
-      <div className="flex items-center gap-3 text-xs text-white/45" aria-hidden="true"><span className="h-px flex-1 bg-white/10" />WhatsApp<span className="h-px flex-1 bg-white/10" /></div>
-      <button type="button" onClick={sendWhatsApp} className="flex h-12 w-full items-center justify-center gap-2.5 rounded-xl text-sm font-semibold text-white ring-1 ring-whatsapp/60 transition hover:bg-whatsapp/15">
-        <WhatsAppIcon className="h-5 w-5 text-whatsapp" />{t.form.whatsappInstead}
-      </button>
-      {effectiveMuni && <p className="text-center text-xs text-white/55">{fmt(t.form.sendTo, { m: t.common[effectiveMuni], n: MUNICIPALITIES[effectiveMuni].mobileDisplay })}</p>}
-      {status === 'whatsapp' && <p role="status" className="flex items-start gap-2 rounded-xl bg-whatsapp/15 p-3 text-sm text-white"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-whatsapp" aria-hidden="true" />{t.form.success}</p>}
 
       <p className="flex items-start justify-center gap-1.5 text-center text-[11px] leading-relaxed text-white/40"><Lock className="mt-0.5 h-3 w-3 shrink-0" aria-hidden="true" />{direct ? t.form.privacyDirect : t.form.privacy}</p>
     </form>

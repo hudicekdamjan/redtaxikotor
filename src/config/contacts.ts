@@ -50,7 +50,7 @@ export const BOOKING_EMAIL = EMAIL
  *              to BOOKING_EMAIL — click it once, then inquiries arrive normally.
  *  'mailapp' — opens the visitor's own email app with the message ready; the visitor presses send.
  */
-export const INQUIRY_DELIVERY: 'direct' | 'mailapp' = 'direct'
+export const INQUIRY_DELIVERY: 'direct' | 'mailapp' = 'mailapp'
 export const FORM_ENDPOINT = `https://formsubmit.co/ajax/${BOOKING_EMAIL}`
 
 /** tel: link for the short hotline */

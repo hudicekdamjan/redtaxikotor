@@ -28,7 +28,7 @@ export default function Excursions() {
           <p className="mt-8 text-sm text-stone">{p.detail.note} {t.common.allPricesEur}</p>
         </Container>
       </section>
-      <CtaBand title={p.detail.book} text={p.detail.bookText} />
+      <CtaBand title={t.location.question} text={t.location.rule} />
     </>
   )
 }

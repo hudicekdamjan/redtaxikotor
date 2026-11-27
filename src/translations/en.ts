@@ -13,7 +13,7 @@ const en = {
     airport: {
       title: 'Tivat Airport Transfer & Kotor Airport Taxi | Red Taxi',
       description:
-        'Private Tivat Airport and Podgorica Airport transfers to Kotor, Budva, Perast, Herceg Novi and more. Published fixed route prices. Book by email or WhatsApp.',
+        'Private Tivat Airport and Podgorica Airport transfers to Kotor, Budva, Perast, Herceg Novi and more. Published fixed route prices. Book online by email.',
     },
     excursions: {
       title: 'Private Excursions from Kotor – Lovćen, Perast, Cetinje | Red Taxi',
@@ -237,13 +237,13 @@ const en = {
     book: {
       eyebrow: 'Booking',
       title: 'Book your transfer',
-      subtitle: 'Fill in the details and send the inquiry by email or WhatsApp — the message is prepared for you. We will confirm your booking.',
+      subtitle: 'Fill in the details and send the inquiry by email — the message is prepared for you. We will confirm your booking.',
     },
   },
 
   form: {
     municipalityLabel: 'Where are you now?',
-    municipalityHint: 'So we can send the nearest car. WhatsApp requests go to the dispatch of this municipality.',
+    municipalityHint: 'So we can send the nearest car.',
     pickup: 'Pickup location',
     pickupPh: 'e.g. Tivat Airport',
     destination: 'Destination',
@@ -254,9 +254,10 @@ const en = {
     passengersHint: 'Max 4 passengers per car. For 5 or more, a second vehicle is needed — mention it in Additional information.',
     luggage: 'Luggage (pieces)',
     luggagePh: 'Choose…',
-    luggageHint: 'Suitcases and bags — so we send the right car.',
+    luggageHint: 'Suitcases and bags, max 6 per car — so we send the right car.',
     flight: 'Flight number',
     flightPh: 'e.g. JU 170',
+    flightHint: 'Required for airport transfers — so we can plan your pickup around your flight.',
     name: 'Full name',
     namePh: 'Your name',
     phone: 'Phone number',
@@ -271,28 +272,30 @@ const en = {
     submitInquiry: 'Send inquiry',
     submitInquiryMailApp: 'Send inquiry by email',
     emailTo: 'Opens your email app with the message ready for {e}',
+    whyMailApp: 'Why your email app? The inquiry is sent from your own email address, so our reply arrives straight in your inbox — not in spam — and no booking gets lost or forgotten.',
     emailDirect: 'Sent directly to Red Taxi ({e})',
     sending: 'Sending…',
     sentTitle: 'Thank you! Your inquiry has been sent.',
     sentText: 'Red Taxi will contact you shortly by phone or email to confirm.',
     newInquiry: 'Send another inquiry',
-    sendError: 'Sorry, the inquiry could not be sent. Please try again — or send it from your email app or on WhatsApp.',
+    sendError: 'Sorry, the inquiry could not be sent. Please try again — or send it from your email app.',
     openMailApp: 'Open in my email app',
     emailHint: 'so we can reply by email',
     privacyDirect: 'Your inquiry is emailed to Red Taxi via the FormSubmit service and is not stored on this website.',
     whatsappInstead: 'Or send the same request on WhatsApp',
-    submitEmail: 'Send by email',
+    submitEmail: 'Send message by email',
     sendTo: 'Will be sent to Red Taxi {m} · {n}',
     errors: {
       municipality: 'Please choose the municipality you are in.',
       required: 'This field is required.',
       phone: 'Please enter a valid phone number.',
+      flight: 'Please enter a valid flight number, e.g. JU 170.',
       email: 'Please enter a valid email address.',
       datePast: 'Please choose a date in the future.',
     },
     success: 'WhatsApp is opening with your request. Press send in WhatsApp to deliver it.',
     successEmail: 'Your email app is opening with the message. Press send to deliver it.',
-    privacy: 'No data is stored on this website — your message is sent directly through WhatsApp or your email app.',
+    privacy: 'No data is stored on this website — your message is sent from your own email app.',
     msg: {
       bookingTitle: 'Transfer booking request – Red Taxi',
       contactTitle: 'Message – Red Taxi website',
@@ -368,7 +371,7 @@ const en = {
       duration: 'Duration',
       highlights: 'Highlights',
       book: 'Book this excursion',
-      bookText: 'Send us your preferred date, time and number of passengers. We will confirm the details by email or WhatsApp.',
+      bookText: 'Send us your preferred date, time and number of passengers. We will confirm the details by email.',
       other: 'Other excursions',
       back: 'All excursions',
       note: 'Price per trip with a private Red Taxi car and driver.',
@@ -435,7 +438,7 @@ const en = {
     tivatArea: 'Tivat Municipality, Montenegro',
     form: {
       title: 'Send us a message',
-      subtitle: 'For questions, group bookings or feedback. Send it via WhatsApp to the right dispatch, or by email.',
+      subtitle: 'For questions, group bookings or feedback. Your message is sent from your email app to redtaxikotor@gmail.com.',
     },
     faq: {
       title: 'Frequently asked questions',
@@ -454,7 +457,11 @@ const en = {
         },
         {
           q: 'How do I book an airport transfer?',
-          a: 'Use the booking form on the Airport Transfers page. It prepares an email (or a WhatsApp message) with all the details; press send and our dispatch will confirm.',
+          a: 'Use the booking form on the Airport Transfers page. It prepares an email with all the details; press send and our dispatch will confirm.',
+        },
+        {
+          q: 'Why does the booking form open my email app?',
+          a: 'On purpose. Your inquiry is sent from your own email address, so when we confirm the booking, our reply arrives in your inbox as part of the same conversation — not in spam. That way no message goes unseen and no booking is forgotten.',
         },
         {
           q: 'Should I include my flight number?',
