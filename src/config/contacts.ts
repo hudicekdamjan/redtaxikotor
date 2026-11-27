@@ -43,6 +43,16 @@ export const EMAIL = 'redtaxikotor@gmail.com'
 /** Transfer / excursion inquiries from the booking form are addressed to this email. */
 export const BOOKING_EMAIL = EMAIL
 
+/**
+ * How booking inquiries are delivered:
+ *  'direct'  — sent straight from the website to BOOKING_EMAIL through FormSubmit (https://formsubmit.co),
+ *              a free form-to-email service. The FIRST inquiry sends a one-time "Activate Form" email
+ *              to BOOKING_EMAIL — click it once, then inquiries arrive normally.
+ *  'mailapp' — opens the visitor's own email app with the message ready; the visitor presses send.
+ */
+export const INQUIRY_DELIVERY: 'direct' | 'mailapp' = 'direct'
+export const FORM_ENDPOINT = `https://formsubmit.co/ajax/${BOOKING_EMAIL}`
+
 /** tel: link for the short hotline */
 export const telHotline = (m: Municipality) => `tel:${m.hotline}`
 /** tel: link for the full mobile number (works from foreign SIM cards) */
