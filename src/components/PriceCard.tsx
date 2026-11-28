@@ -51,7 +51,7 @@ export default function PriceCard({ title, text, rows, icon, footer, intro, id, 
             ) : (
               <div className="shrink-0 text-right">
                 <span className="font-display text-2xl font-extrabold text-red">{eur(r.price)}</span>
-                {r.note && <span className="block text-xs text-stone">{t.prices.notes[r.note]}</span>}
+                {r.note && <span className="ml-auto block max-w-[8.5rem] text-xs leading-snug text-stone sm:max-w-none">{t.prices.notes[r.note]}</span>}
               </div>
             )}
           </li>

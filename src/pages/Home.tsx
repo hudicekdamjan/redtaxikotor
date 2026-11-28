@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight, Briefcase, Car, Clock, MapPin, Mountain, Plane, ShieldCheck, Star } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Briefcase, CableCar, Phone, Car, Clock, MapPin, Mountain, Plane, ShieldCheck, Star } from 'lucide-react'
 import BookingForm from '../components/BookingForm'
 import ContactButtons from '../components/ContactButtons'
 import Img from '../components/Img'
@@ -11,9 +11,9 @@ import TourCard from '../components/TourCard'
 import { MUNICIPALITIES, MUNICIPALITY_IDS } from '../config/contacts'
 import type { ImageKey } from '../config/images'
 import { pathFor, type PageKey } from '../config/routes'
-import { useLang } from '../context/LangContext'
+import { fmt, useLang } from '../context/LangContext'
 import { EXCURSIONS } from '../data/excursions'
-import { AIRPORT_TRANSFERS } from '../data/prices'
+import { AIRPORT_TRANSFERS, INTERCITY_TRANSFERS, TO_AIRPORT } from '../data/prices'
 
 const SERVICE_LINKS: { key: PageKey; img: ImageKey; icon: typeof Car; hash?: string }[] = [
   { key: 'taxi', img: 'kotorNight', icon: Car },
@@ -29,11 +29,31 @@ const DESTINATIONS: { to: string; img: ImageKey }[] = [
 ]
 const WHY_ICONS = [Clock, ShieldCheck, MapPin, Car]
 
+function PopularCard({ icon: Icon, badge, title, text, price, cta, href }: { icon: typeof Plane; badge: string; title: string; text: string; price: number; cta: string; href: string }) {
+  return (
+    <div className="relative overflow-hidden rounded-2xl bg-ink p-5 text-white shadow-lift ring-1 ring-red/40">
+      <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-red/25 blur-2xl" aria-hidden="true" />
+      <div className="relative flex items-start gap-4">
+        <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red"><Icon className="h-6 w-6" aria-hidden="true" /></span>
+        <div className="min-w-0 flex-1">
+          <span className="inline-flex items-center gap-1 rounded-full bg-red px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider"><Star className="h-3 w-3 fill-current" aria-hidden="true" />{badge}</span>
+          <h3 className="mt-2 font-display text-xl font-extrabold leading-tight">{title}</h3>
+          <p className="mt-1 text-sm leading-snug text-white/70">{text}</p>
+        </div>
+        <span className="shrink-0 font-display text-4xl font-extrabold text-red">€{price}</span>
+      </div>
+      <a href={href} className="relative mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-white text-sm font-bold uppercase tracking-wide text-ink transition hover:bg-red hover:text-white">{href === '#location' ? <Phone className="h-4 w-4" aria-hidden="true" /> : <ArrowRight className="h-4 w-4" aria-hidden="true" />}{cta}</a>
+    </div>
+  )
+}
+
 export default function Home() {
   const { lang, t } = useLang()
   const h = t.home
   const featured = AIRPORT_TRANSFERS.filter((r) => r.featured)
   const kotorPrice = AIRPORT_TRANSFERS[0].price
+  const toKotorAirport = TO_AIRPORT[0]
+  const cableCarPrice = INTERCITY_TRANSFERS.find((r) => r.from === 'Žičara (Cable car)')!.price
 
   return (
     <>
@@ -118,6 +138,11 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+            {/* Popular routes (prices come from data/prices.ts) */}
+            <div className="mt-5 space-y-4">
+              <PopularCard icon={Plane} badge={h.popular.badge} title={h.popular.airport.title} text={fmt(h.popular.airport.text, { s: toKotorAirport.price!, o: toKotorAirport.offSeason! })} price={kotorPrice!} cta={h.popular.airport.cta} href="#book-home" />
+              <PopularCard icon={CableCar} badge={h.popular.badge} title={h.popular.cableCar.title} text={h.popular.cableCar.text} price={cableCarPrice!} cta={h.popular.cableCar.cta} href="#location" />
+            </div>
             <Link to={pathFor(lang, 'prices')} className="mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-red">
               {t.common.viewFullPriceList}<ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>

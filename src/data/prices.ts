@@ -73,7 +73,8 @@ export const INTERCITY_TRANSFERS: PriceRow[] = [
   { from: 'Dubrovnik Airport (Čilipi), Croatia', to: 'Kotor', price: 150 },
   { from: 'Kotor', to: 'Dubrovnik, Croatia', price: 160 },
   { from: TIVAT_AIRPORT, to: 'Dubrovnik, Croatia', price: 160 },
-  { from: 'Kotor cable car (Žičara)', to: 'Kotor Old Town (harbour)', price: 20, note: 'perVehicle' },
+  { from: 'Old Town, Kotor port', to: 'Žičara (Cable car)', price: 20, note: 'perVehicle' },
+  { from: 'Žičara (Cable car)', to: 'Old Town, Kotor port', price: 20, note: 'perVehicle' },
 ]
 
 /** Display names for place names in Montenegrin (proper nouns otherwise unchanged). */
@@ -83,6 +84,6 @@ export const PLACE_ME: Record<string, string> = {
   'Podgorica Airport': 'Aerodrom Podgorica',
   'Dubrovnik Airport (Čilipi), Croatia': 'Aerodrom Dubrovnik (Čilipi), Hrvatska',
   'Dubrovnik, Croatia': 'Dubrovnik, Hrvatska',
-  'Kotor cable car (Žičara)': 'Kotor – Žičara',
-  'Kotor Old Town (harbour)': 'Stari grad (luka)',
+  'Žičara (Cable car)': 'Žičara',
+  'Old Town, Kotor port': 'Stari grad, luka Kotor',
 }

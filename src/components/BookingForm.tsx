@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { AlertCircle, ArrowRight, CheckCircle2, Info, Loader2, Lock, Mail, Repeat, Send } from 'lucide-react'
+import { AlertCircle, ArrowRight, CheckCircle2, Info, Loader2, Lock, Luggage, Mail, Repeat, Send } from 'lucide-react'
 import { BOOKING_EMAIL, FORM_ENDPOINT, INQUIRY_DELIVERY, MUNICIPALITIES, type MunicipalityId } from '../config/contacts'
 import { DICTS, fmt, useLang } from '../context/LangContext'
 import { useMunicipality } from '../context/MunicipalityContext'
@@ -213,10 +213,14 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
             {['1', '2', '3', '4'].map((n) => <option key={n} value={n} className="bg-ink text-white">{n}</option>)}
           </select>
         </Field>
-        <Field label={t.form.luggage} htmlFor={`${idPrefix}-luggage`} required error={err('luggage')} hint={t.form.luggageHint}>
+        <Field label={t.form.luggage} htmlFor={`${idPrefix}-luggage`} required error={err('luggage')} hint={<>
+          <p>{t.form.luggageHint} {t.form.luggageCombosTitle}</p>
+          <ul className="mt-1 space-y-0.5">{t.form.luggageCombos.map((c) => <li key={c} className="flex items-center gap-1.5"><Luggage className="h-3 w-3 shrink-0 text-red" aria-hidden="true" />{c}</li>)}</ul>
+          <p className="mt-1">{t.form.luggageOther}</p>
+        </>}>
           <select id={`${idPrefix}-luggage`} className={inputCls} value={v.luggage} onChange={set('luggage')} {...aria('luggage')}>
             <option value="" disabled className="bg-ink text-white">{t.form.luggagePh}</option>
-            {['0', '1', '2', '3', '4', '5', '6'].map((n) => <option key={n} value={n} className="bg-ink text-white">{n}</option>)}
+            {['0', '1', '2', '3', '4'].map((n) => <option key={n} value={n} className="bg-ink text-white">{n}</option>)}
           </select>
         </Field>
         <Field label={t.form.flight} htmlFor={`${idPrefix}-flight`} required={isAirport} optionalLabel={t.common.optional} error={err('flight')} hint={isAirport ? t.form.flightHint : undefined}>

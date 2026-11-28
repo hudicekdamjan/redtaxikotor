@@ -111,6 +111,7 @@ const en = {
     rights: 'All rights reserved.',
     photos: 'Photos',
     morePhotos: 'Additional photos',
+    designedBy: 'Website designed & developed by',
     photoRights: 'All rights reserved',
   },
 
@@ -132,6 +133,19 @@ const en = {
         { title: 'Private excursions', text: 'Lovćen, Perast, Cetinje, Sveti Stefan, Skadar Lake, Rijeka Crnojevića and Žabljak.' },
         { title: 'Business & events', text: 'Punctual transport for meetings, hotels and special occasions.' },
       ],
+    },
+    popular: {
+      badge: 'Popular',
+      airport: {
+        title: 'Tivat Airport → Kotor Old Town',
+        text: 'Per vehicle, up to 4 people. Kotor → airport: €{s} in season, €{o} off-season.',
+        cta: 'Book a transfer',
+      },
+      cableCar: {
+        title: 'Kotor ⇄ Cable car (Žičara)',
+        text: 'Kotor → Cable car or Cable car → Kotor · one way · per vehicle · up to 4 people',
+        cta: 'Call a taxi',
+      },
     },
     airport: {
       eyebrow: 'Airport transfers',
@@ -264,7 +278,10 @@ const en = {
     returnTime: 'Return pickup time',
     luggage: 'Luggage (pieces)',
     luggagePh: 'Choose…',
-    luggageHint: 'Suitcases and bags, max 6 per car — so we send the right car.',
+    luggageHint: 'Max 4 pieces per car.',
+    luggageCombosTitle: 'For information, these combinations fit:',
+    luggageCombos: ['2 medium + 2 small', '1 large + 1 medium + 2 small', '2 large + 1 small'],
+    luggageOther: 'For anything else, describe it in Additional information (optional).',
     flight: 'Flight number',
     flightPh: 'e.g. JU 170',
     flightHint: 'Required for airport transfers — so we can plan your pickup around your flight.',
@@ -421,7 +438,7 @@ const en = {
       bothRides: 'Price for both rides: from the airport to your accommodation and back to the airport.',
       rule: 'Return transfers are only possible within Kotor and Tivat municipalities. For other cities (e.g. Budva) we can only drive you one way.',
     },
-    notes: { perVehicle: 'per vehicle, up to 4 people' },
+    notes: { perVehicle: 'per vehicle, one way, up to 4 people' },
     intercity: { title: 'Intercity transfers', text: 'Podgorica, Dubrovnik and other long-distance transfers.' },
     croatiaNote: 'Transfers to Croatia: due to Croatian regulations, Montenegrin taxis cannot drive passengers in Croatia. In coordination with our partner taxi company from Dubrovnik, you switch to their car at the border crossing — we organise everything. The prices shown are total prices and include the Croatian part of the trip.',
     excursions: { title: 'Private excursions', text: 'Round trip from Kotor, price per vehicle, 2 hours of waiting included.' },
