@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Mail, Phone } from 'lucide-react'
 import { EMAIL, MUNICIPALITIES, MUNICIPALITY_IDS, telHotline, telMobile } from '../config/contacts'
-import { IMAGES, PHOTOGRAPHER } from '../config/images'
+import { PHOTOGRAPHER } from '../config/images'
 import { InstagramIcon } from './BrandIcons'
 import { NAV_KEYS, pathFor } from '../config/routes'
 import { useLang } from '../context/LangContext'
@@ -10,7 +10,6 @@ import Logo from './Logo'
 
 export default function Footer() {
   const { lang, t } = useLang()
-  const credits = Object.values(IMAGES).flatMap((i) => ('credit' in i && i.credit ? [i.credit] : []))
   return (
     <footer className="bg-[#0F0F0F] pb-32 pt-16 text-white md:pb-10">
       <div className="mx-auto max-w-site px-4 sm:px-6">
@@ -57,7 +56,6 @@ export default function Footer() {
               )}
               <span>· {t.footer.photoRights}</span>
             </p>
-            {credits.length > 0 && <p className="max-w-xl text-[11px] text-white/35 sm:ml-auto">{t.footer.morePhotos}: {credits.join(' · ')}</p>}
           </div>
         </div>
       </div>

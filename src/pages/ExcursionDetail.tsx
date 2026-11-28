@@ -22,7 +22,7 @@ export default function ExcursionDetail() {
   const path = pathFor(lang, 'excursions', tour.slug)
   const ld = [
     breadcrumbLd([{ name: t.nav.home, path: pathFor(lang, 'home') }, { name: t.nav.excursions, path: pathFor(lang, 'excursions') }, { name: c.name, path }]),
-    { '@context': 'https://schema.org', '@type': 'TouristTrip', name: c.name, description: c.long, url: SITE_URL + path, itinerary: { '@type': 'ItemList', itemListElement: tour.stops.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s })) }, offers: { '@type': 'Offer', price: tour.price, priceCurrency: 'EUR' }, provider: { '@id': `${SITE_URL}/#kotor` } },
+    { '@context': 'https://schema.org', '@type': 'TouristTrip', name: c.name, description: c.long, url: SITE_URL + path, itinerary: { '@type': 'ItemList', itemListElement: tour.stops.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s[lang] })) }, offers: { '@type': 'Offer', price: tour.price, priceCurrency: 'EUR' }, provider: { '@id': `${SITE_URL}/#kotor` } },
   ]
   return (
     <>
@@ -38,7 +38,7 @@ export default function ExcursionDetail() {
             <p className="mt-5 text-lg text-white/75 sm:text-xl">{c.short}</p>
             <dl className="mt-8 flex flex-wrap gap-3">
               <div className="flex items-center gap-2 rounded-full bg-red px-5 py-2.5 text-white"><Wallet className="h-4 w-4" aria-hidden="true" /><dt className="sr-only">{d.price}</dt><dd className="font-display text-lg font-extrabold">€{tour.price} <span className="text-sm font-medium opacity-80">/ {t.common.perTrip}</span></dd></div>
-              <div className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-white ring-1 ring-white/20"><Clock className="h-4 w-4" aria-hidden="true" /><dt className="sr-only">{d.duration}</dt><dd className="text-sm font-semibold">{tour.duration ?? t.common.durationOnRequest}</dd></div>
+              <div className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-2.5 text-white ring-1 ring-white/20"><Clock className="h-4 w-4" aria-hidden="true" /><dt className="sr-only">{d.duration}</dt><dd className="text-sm font-semibold">{fmt(t.common.waitIncluded, { h: tour.waitHours })}{tour.extraHour ? ` · ${fmt(t.common.extraHour, { p: tour.extraHour })}` : ''}</dd></div>
             </dl>
           </div>
         </Container>
@@ -53,7 +53,7 @@ export default function ExcursionDetail() {
             <ol className="mt-5 flex flex-wrap items-center gap-2">
               {tour.stops.map((s, i) => (
                 <li key={i} className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-mist px-4 py-2 text-sm font-semibold text-ink"><MapPin className="h-3.5 w-3.5 text-red" aria-hidden="true" />{lang === 'en' && s === 'Skadarsko jezero' ? 'Skadar Lake' : s}</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-mist px-4 py-2 text-sm font-semibold text-ink"><MapPin className="h-3.5 w-3.5 text-red" aria-hidden="true" />{s[lang]}</span>
                   {i < tour.stops.length - 1 && <span className="h-px w-4 bg-red" aria-hidden="true" />}
                 </li>
               ))}

@@ -1,3 +1,4 @@
+import { IMAGES, type ImageDef } from '../config/images'
 import { Clock, Headphones, MapPinned, ShieldCheck, Sofa, UserCheck } from 'lucide-react'
 import CtaBand from '../components/CtaBand'
 import Hero from '../components/Hero'
@@ -10,6 +11,8 @@ import { pathFor } from '../config/routes'
 import { useLang } from '../context/LangContext'
 
 const ICONS = [UserCheck, MapPinned, Headphones, ShieldCheck, Sofa, Clock]
+
+const PHOTO_CREDITS = Object.values(IMAGES).flatMap((i: ImageDef) => (i.credit ? [i.credit] : []))
 
 export default function AboutUs() {
   const { lang, t } = useLang()
@@ -56,6 +59,8 @@ export default function AboutUs() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {p.values.items.map((v, i) => <ServiceCard key={v.title} icon={ICONS[i]} title={v.title} text={v.text} />)}
           </div>
+          {/* Licence attribution for the free (CC BY-SA) photos — the footer credits only Ranko Maraš */}
+          <p className="mt-12 text-xs leading-relaxed text-stone/80">{t.footer.morePhotos}: {PHOTO_CREDITS.join(' · ')}</p>
         </Container>
       </section>
       <CtaBand title={t.home.contact.title} text={t.home.contact.text} />

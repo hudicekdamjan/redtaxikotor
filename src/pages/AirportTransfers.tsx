@@ -4,13 +4,14 @@ import BookingForm from '../components/BookingForm'
 import CtaBand from '../components/CtaBand'
 import Hero from '../components/Hero'
 import PriceCard from '../components/PriceCard'
+import ReturnIntro from '../components/ReturnIntro'
 import { Container, SectionHeading } from '../components/Section'
 import Seo, { breadcrumbLd } from '../components/Seo'
 import ServiceCard from '../components/ServiceCard'
 import { pathFor } from '../config/routes'
 import { useLang } from '../context/LangContext'
-import { AIRPORT_TRANSFERS, INTERCITY_TRANSFERS } from '../data/prices'
-import { Plane } from 'lucide-react'
+import { AIRPORT_TRANSFERS, INTERCITY_TRANSFERS, RETURN_TRIPS, TO_AIRPORT } from '../data/prices'
+import { Plane, PlaneTakeoff, Repeat } from 'lucide-react'
 
 const ICONS = [PlaneLanding, UserRound, Hotel, Ship, Clock, Car]
 
@@ -48,8 +49,12 @@ export default function AirportTransfers() {
         <Container>
           <SectionHeading eyebrow={p.routes.eyebrow} title={p.routes.title} subtitle={p.routes.subtitle} />
           <div className="mt-12 grid items-start gap-6 lg:grid-cols-2">
-            <PriceCard title={p.routes.tivat} rows={AIRPORT_TRANSFERS} icon={<Plane className="h-6 w-6" aria-hidden="true" />} />
             <div className="space-y-6">
+              <PriceCard title={p.routes.tivat} text={t.prices.airport.text} rows={AIRPORT_TRANSFERS} icon={<Plane className="h-6 w-6" aria-hidden="true" />} />
+              <PriceCard seasonal title={p.routes.toAirport} rows={TO_AIRPORT} icon={<PlaneTakeoff className="h-6 w-6" aria-hidden="true" />} />
+            </div>
+            <div className="space-y-6">
+              <PriceCard seasonal title={p.routes.returnTrips} text={t.prices.returnTrips.text} rows={RETURN_TRIPS} intro={<ReturnIntro />} icon={<Repeat className="h-6 w-6" aria-hidden="true" />} />
               <PriceCard title={p.routes.other} rows={INTERCITY_TRANSFERS} icon={<Car className="h-6 w-6" aria-hidden="true" />} />
               <p className="flex items-start gap-2.5 rounded-xl bg-white p-4 text-sm leading-relaxed text-ink shadow-card ring-1 ring-black/5"><Info className="mt-0.5 h-4 w-4 shrink-0 text-red" aria-hidden="true" />{t.prices.croatiaNote}</p>
               <p className="text-sm text-stone">{t.common.allPricesEur}</p>

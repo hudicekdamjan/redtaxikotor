@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Car, Info, Mountain, Plane } from 'lucide-react'
+import { ArrowRight, Car, Info, Mountain, Plane, PlaneTakeoff, Repeat } from 'lucide-react'
 import ContactButtons from '../components/ContactButtons'
 import Hero from '../components/Hero'
 import PriceCard from '../components/PriceCard'
+import ReturnIntro from '../components/ReturnIntro'
 import { Container } from '../components/Section'
 import Seo, { breadcrumbLd } from '../components/Seo'
 import { MUNICIPALITIES, MUNICIPALITY_IDS } from '../config/contacts'
 import { pathFor } from '../config/routes'
 import { useLang } from '../context/LangContext'
 import { EXCURSIONS } from '../data/excursions'
-import { AIRPORT_TRANSFERS, INTERCITY_TRANSFERS } from '../data/prices'
+import { AIRPORT_TRANSFERS, INTERCITY_TRANSFERS, RETURN_TRIPS, TO_AIRPORT } from '../data/prices'
 
 function CroatiaNote() {
   const { t } = useLang()
@@ -38,6 +39,8 @@ export default function PriceList() {
   const p = t.prices
   const cats = [
     { id: 'airport', label: p.airport.title, icon: Plane },
+    { id: 'to-airport', label: p.toAirport.title, icon: PlaneTakeoff },
+    { id: 'return', label: p.returnTrips.title, icon: Repeat },
     { id: 'intercity', label: p.intercity.title, icon: Car },
     { id: 'excursions', label: p.excursions.title, icon: Mountain },
   ]
@@ -60,6 +63,8 @@ export default function PriceList() {
         <Container className="space-y-8">
 
           <PriceCard id="airport" title={p.airport.title} text={p.airport.text} rows={AIRPORT_TRANSFERS} icon={<Plane className="h-6 w-6" aria-hidden="true" />} footer={<CategoryCta />} />
+          <PriceCard id="to-airport" seasonal title={p.toAirport.title} text={p.toAirport.text} rows={TO_AIRPORT} icon={<PlaneTakeoff className="h-6 w-6" aria-hidden="true" />} footer={<CategoryCta />} />
+          <PriceCard id="return" seasonal title={p.returnTrips.title} text={p.returnTrips.text} rows={RETURN_TRIPS} intro={<ReturnIntro />} icon={<Repeat className="h-6 w-6" aria-hidden="true" />} footer={<CategoryCta />} />
           <PriceCard id="intercity" title={p.intercity.title} text={p.intercity.text} rows={INTERCITY_TRANSFERS} icon={<Car className="h-6 w-6" aria-hidden="true" />} footer={<><CroatiaNote /><CategoryCta /></>} />
 
           <section id="excursions" className="scroll-mt-40 overflow-hidden rounded-2xl bg-white shadow-card ring-1 ring-black/5">

@@ -15,7 +15,7 @@ const SLUGS = {
   home: { en: '', me: '' }, taxi: { en: 'taxi-services', me: 'taxi-usluge' }, airport: { en: 'airport-transfers', me: 'aerodromski-transferi' },
   excursions: { en: 'excursions', me: 'izleti' }, prices: { en: 'price-list', me: 'cjenovnik' }, about: { en: 'about-us', me: 'o-nama' }, contact: { en: 'contact', me: 'kontakt' },
 }
-const TOURS = ['kotor-perast-panorama', 'kotor-lovcen', 'kotor-sveti-stefan', 'kotor-skadar-lake', 'kotor-njegusi-cetinje', 'kotor-sveti-stefan-budva-perast']
+const TOURS = ['kotor-perast-panorama', 'kotor-lovcen', 'kotor-sveti-stefan', 'kotor-skadar-lake', 'kotor-njegusi-cetinje', 'kotor-rijeka-crnojevica', 'kotor-zabljak']
 const p = (lang, key, sub) => (key === 'home' ? `/${lang}/` : `/${lang}/${SLUGS[key][lang]}${sub ? '/' + sub : ''}`)
 const pages = [...Object.keys(SLUGS).map((k) => ({ en: p('en', k), me: p('me', k) })), ...TOURS.map((t) => ({ en: p('en', 'excursions', t), me: p('me', 'excursions', t) }))]
 

@@ -1,21 +1,30 @@
 /**
- * EXCURSIONS — names and prices exactly as published on redtaxikotor.com (EUR).
- * Durations are NOT published, so `duration` is null ("on request") until confirmed.
+ * EXCURSIONS — official Red Taxi price list (EUR), November 2026.
+ * Price per vehicle, round trip from Kotor, with 2 hours of waiting at the destination included.
  */
+export interface Stop { en: string; me: string }
 export interface Excursion {
   slug: string
   price: number
-  duration: string | null
+  /** waiting time at the destination included in the price */
+  waitHours: number
+  /** price for every additional hour of waiting (when published) */
+  extraHour?: number
   image: string
-  /** route stops (proper nouns, same in both languages) */
-  stops: string[]
+  /** route stops (viewpoints are translated) */
+  stops: Stop[]
 }
 
+const s = (name: string): Stop => ({ en: name, me: name })
+const view = (name: string): Stop => ({ en: `${name} viewpoint`, me: `Vidikovac ${name}` })
+const KOTOR = s('Kotor')
+
 export const EXCURSIONS: Excursion[] = [
-  { slug: 'kotor-perast-panorama', price: 80, duration: null, image: 'perast', stops: ['Kotor', 'Panorama', 'Perast', 'Kotor'] },
-  { slug: 'kotor-lovcen', price: 90, duration: null, image: 'lovcen', stops: ['Kotor', 'Lovćen', 'Kotor'] },
-  { slug: 'kotor-sveti-stefan', price: 100, duration: null, image: 'sveti-stefan', stops: ['Kotor', 'Sveti Stefan', 'Kotor'] },
-  { slug: 'kotor-skadar-lake', price: 120, duration: null, image: 'skadar', stops: ['Kotor', 'Skadarsko jezero', 'Kotor'] },
-  { slug: 'kotor-njegusi-cetinje', price: 140, duration: null, image: 'cetinje', stops: ['Kotor', 'Njeguši', 'Cetinje', 'Kotor'] },
-  { slug: 'kotor-sveti-stefan-budva-perast', price: 150, duration: null, image: 'budva', stops: ['Kotor', 'Sveti Stefan', 'Budva', 'Perast', 'Kotor'] },
+  { slug: 'kotor-perast-panorama', price: 100, waitHours: 2, image: 'perast', stops: [KOTOR, view('Trojica'), s('Perast'), KOTOR] },
+  { slug: 'kotor-sveti-stefan', price: 150, waitHours: 2, image: 'sveti-stefan', stops: [KOTOR, view('Jaz'), view('Budva'), s('Sveti Stefan'), KOTOR] },
+  { slug: 'kotor-lovcen', price: 150, waitHours: 2, image: 'lovcen', stops: [KOTOR, view('Krstac'), { en: 'Lovćen National Park or Njegoš Mausoleum', me: 'NP Lovćen ili Njegošev mauzolej' }, KOTOR] },
+  { slug: 'kotor-njegusi-cetinje', price: 160, waitHours: 2, image: 'cetinje', stops: [KOTOR, { en: 'Serpentine viewpoint', me: 'Vidikovac na serpentinama' }, s('Njeguši'), s('Cetinje'), KOTOR] },
+  { slug: 'kotor-skadar-lake', price: 180, waitHours: 2, extraHour: 15, image: 'skadar', stops: [KOTOR, view('Jaz'), view('Sveti Stefan'), { en: 'Skadar Lake', me: 'Skadarsko jezero' }, KOTOR] },
+  { slug: 'kotor-rijeka-crnojevica', price: 200, waitHours: 2, image: 'rijeka-crnojevica', stops: [KOTOR, view('Njeguši'), view('Pavlova strana'), s('Rijeka Crnojevića'), KOTOR] },
+  { slug: 'kotor-zabljak', price: 300, waitHours: 2, image: 'zabljak', stops: [KOTOR, view('Lipci'), { en: 'Slano Lake viewpoint', me: 'Vidikovac Slano jezero' }, s('Žabljak'), KOTOR] },
 ]

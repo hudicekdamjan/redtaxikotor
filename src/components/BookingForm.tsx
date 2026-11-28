@@ -1,13 +1,13 @@
 import { useState, type FormEvent } from 'react'
-import { AlertCircle, CheckCircle2, Info, Loader2, Lock, Mail, Send } from 'lucide-react'
+import { AlertCircle, ArrowRight, CheckCircle2, Info, Loader2, Lock, Mail, Repeat, Send } from 'lucide-react'
 import { BOOKING_EMAIL, FORM_ENDPOINT, INQUIRY_DELIVERY, MUNICIPALITIES, type MunicipalityId } from '../config/contacts'
 import { DICTS, fmt, useLang } from '../context/LangContext'
 import { useMunicipality } from '../context/MunicipalityContext'
 import Field, { inputCls } from './Field'
 import MunicipalityPicker from './MunicipalityPicker'
 
-type Values = { pickup: string; destination: string; date: string; time: string; passengers: string; luggage: string; flight: string; name: string; phone: string; email: string; notes: string }
-const empty: Values = { pickup: '', destination: '', date: '', time: '', passengers: '1', luggage: '', flight: '', name: '', phone: '', email: '', notes: '' }
+type Values = { trip: 'oneWay' | 'return'; returnDate: string; returnTime: string; pickup: string; destination: string; date: string; time: string; passengers: string; luggage: string; flight: string; name: string; phone: string; email: string; notes: string }
+const empty: Values = { trip: 'oneWay', returnDate: '', returnTime: '', pickup: '', destination: '', date: '', time: '', passengers: '1', luggage: '', flight: '', name: '', phone: '', email: '', notes: '' }
 const today = () => new Date().toISOString().slice(0, 10)
 export const PHONE_RE = /^\+?[\d\s()./-]{6,20}$/
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
@@ -45,6 +45,8 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
   }
   const effectiveMuni = muni ?? selected
   const isAirport = AIRPORT_RE.test(v.pickup) || AIRPORT_RE.test(v.destination)
+  /** Return option: transfers only (excursions are always round trips) */
+  const isReturn = !excursionName && v.trip === 'return'
 
   function validate() {
     const e: typeof errors = {}
@@ -55,6 +57,11 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
     if (v.email && !EMAIL_RE.test(v.email.trim())) e.email = t.form.errors.email
     if (isAirport && !v.flight.trim()) e.flight = t.form.errors.required
     else if (v.flight.trim() && !FLIGHT_RE.test(v.flight.trim())) e.flight = t.form.errors.flight
+    if (isReturn) {
+      if (!v.returnDate) e.returnDate = t.form.errors.required
+      if (!v.returnTime) e.returnTime = t.form.errors.required
+      if (v.returnDate && v.date && `${v.returnDate}T${v.returnTime || '23:59'}` <= `${v.date}T${v.time || '00:00'}`) e.returnDate = t.form.errors.returnBefore
+    }
     setErrors(e)
     const ok = Object.keys(e).length === 0
     if (!ok) requestAnimationFrame(() => document.querySelector<HTMLElement>(`#${idPrefix}-form [role="alert"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' }))
@@ -72,6 +79,9 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
       `${L.destination}: ${v.destination}`,
       `${L.date}: ${fmtDate(v.date)}`,
       `${L.time}: ${v.time}`,
+      excursionName ? null : `${L.trip}: ${isReturn ? L.returnTrip : L.oneWay}`,
+      isReturn ? `${L.returnDate}: ${fmtDate(v.returnDate)}` : null,
+      isReturn ? `${L.returnTime}: ${v.returnTime}` : null,
       `${L.passengers}: ${v.passengers}`,
       `${L.luggage}: ${v.luggage}`,
       v.flight ? `${L.flight}: ${v.flight}` : null,
@@ -101,6 +111,8 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
       [L.destination]: v.destination,
       [L.date]: fmtDate(v.date),
       [L.time]: v.time,
+      ...(excursionName ? {} : { [L.trip]: isReturn ? L.returnTrip : L.oneWay }),
+      ...(isReturn ? { [L.returnDate]: fmtDate(v.returnDate), [L.returnTime]: v.returnTime } : {}),
       [L.passengers]: v.passengers,
       [L.luggage]: v.luggage,
       ...(v.flight ? { [L.flight]: v.flight } : {}),
@@ -157,6 +169,24 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
         <input id={`${idPrefix}-website`} name="_honey" type="text" tabIndex={-1} autoComplete="off" value={honey} onChange={(e) => setHoney(e.target.value)} />
       </div>}
       <MunicipalityPicker name={`${idPrefix}-muni`} value={effectiveMuni} onChange={(id) => { setMuni(id); setErrors((e) => ({ ...e, muni: undefined })) }} error={errors.muni} />
+      {!excursionName && (
+        <fieldset>
+          <legend className="text-sm font-semibold text-white">{t.form.trip}</legend>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            {(['oneWay', 'return'] as const).map((k) => {
+              const on = v.trip === k
+              return (
+                <label key={k} className={`relative flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-wide ring-1 transition ${on ? 'bg-red text-white ring-red' : 'bg-white/5 text-white ring-white/15 hover:ring-white/40'}`}>
+                  <input type="radio" name={`${idPrefix}-trip`} value={k} checked={on} onChange={() => setV((p) => ({ ...p, trip: k }))} className="sr-only" />
+                  {k === 'oneWay' ? <ArrowRight className="h-4 w-4" aria-hidden="true" /> : <Repeat className="h-4 w-4" aria-hidden="true" />}
+                  {k === 'oneWay' ? t.form.oneWay : t.form.returnTrip}
+                </label>
+              )
+            })}
+          </div>
+          {isReturn && <p className="mt-3 flex items-start gap-2.5 rounded-xl bg-white/5 p-3.5 text-xs leading-relaxed text-white/75 ring-1 ring-white/10"><Info className="mt-0.5 h-4 w-4 shrink-0 text-red" aria-hidden="true" />{t.form.returnHint}</p>}
+        </fieldset>
+      )}
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={t.form.pickup} htmlFor={`${idPrefix}-pickup`} required error={err('pickup')}>
           <input id={`${idPrefix}-pickup`} className={inputCls} placeholder={t.form.pickupPh} value={v.pickup} onChange={set('pickup')} autoComplete="off" {...aria('pickup')} />
@@ -170,6 +200,14 @@ export default function BookingForm({ defaults, excursionName, idPrefix = 'bk' }
         <Field label={t.form.time} htmlFor={`${idPrefix}-time`} required error={err('time')}>
           <input id={`${idPrefix}-time`} type="time" className={inputCls} value={v.time} onChange={set('time')} {...aria('time')} />
         </Field>
+        {isReturn && <>
+          <Field label={t.form.returnDate} htmlFor={`${idPrefix}-returnDate`} required error={err('returnDate')}>
+            <input id={`${idPrefix}-returnDate`} type="date" min={v.date || today()} className={inputCls} value={v.returnDate} onChange={set('returnDate')} {...aria('returnDate')} />
+          </Field>
+          <Field label={t.form.returnTime} htmlFor={`${idPrefix}-returnTime`} required error={err('returnTime')}>
+            <input id={`${idPrefix}-returnTime`} type="time" className={inputCls} value={v.returnTime} onChange={set('returnTime')} {...aria('returnTime')} />
+          </Field>
+        </>}
         <Field label={t.form.passengers} htmlFor={`${idPrefix}-passengers`} required hint={t.form.passengersHint}>
           <select id={`${idPrefix}-passengers`} className={inputCls} value={v.passengers} onChange={set('passengers')} aria-describedby={`${idPrefix}-passengers-hint`}>
             {['1', '2', '3', '4'].map((n) => <option key={n} value={n} className="bg-ink text-white">{n}</option>)}

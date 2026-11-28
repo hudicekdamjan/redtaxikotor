@@ -32,8 +32,10 @@ export const IMAGES = {
   perastPanorama: { file: 'perast-panorama', w: 1440, h: 1818, alt: { en: 'Perast waterfront at dusk', me: 'Obala Perasta u sumrak' } },
   svetiStefan: { file: 'sveti-stefan', w: 1008, h: 581, alt: { en: 'Sveti Stefan islet on the Budva Riviera', me: 'Ostrvo Sveti Stefan na Budvanskoj rivijeri' } },
   njegusiCetinje: { file: 'njegusi-cetinje', w: 1920, h: 1440, alt: { en: 'Njeguši valley below Lovćen', me: 'Njeguško polje ispod Lovćena' } },
-  skadar: { file: 'skadar', w: 1920, h: 952, credit: 'Skadar Lake — Diego Delso, CC BY-SA 3.0', alt: { en: 'Skadar Lake National Park', me: 'Nacionalni park Skadarsko jezero' } },
+  skadar: { file: 'skadar', w: 1920, h: 952, credit: 'Rijeka Crnojevića — Diego Delso, CC BY-SA 3.0', alt: { en: 'Bend of the Crnojević River seen from Pavlova strana', me: 'Meandar Rijeke Crnojevića sa Pavlove strane' } },
   budva: { file: 'budva', w: 1080, h: 729, alt: { en: 'Budva Old Town and marina at dusk', me: 'Stari grad Budva i marina u sumrak' } },
+  skadarLake: { file: 'skadar-lake', w: 3840, h: 2563, credit: 'Skadarsko jezero — Miomir Magdevski, CC BY-SA 4.0', alt: { en: 'Traditional boats on Skadar Lake', me: 'Tradicionalni čamci na Skadarskom jezeru' } },
+  zabljak: { file: 'zabljak', w: 3840, h: 1941, credit: 'Crno jezero — Ingo Mehling, CC BY-SA 4.0', alt: { en: 'Black Lake (Crno jezero) and Međed peak near Žabljak, Durmitor', me: 'Crno jezero i vrh Međed kod Žabljaka, Durmitor' } },
   gospa: { file: 'gospa-od-skrpjela', w: 1440, h: 1590, alt: { en: 'Our Lady of the Rocks and St. George islets in front of Perast', me: 'Ostrva Gospa od Škrpjela i Sveti Đorđe ispred Perasta' } },
 } satisfies Record<string, ImageDef>
 
@@ -44,7 +46,9 @@ export const EXCURSION_IMAGE: Record<string, ImageKey> = {
   perast: 'gospa',
   lovcen: 'kotorNight',
   'sveti-stefan': 'svetiStefan',
-  skadar: 'skadar',
+  skadar: 'skadarLake',
   cetinje: 'njegusiCetinje',
   budva: 'budva',
+  'rijeka-crnojevica': 'skadar',
+  zabljak: 'zabljak',
 }

@@ -3,7 +3,7 @@ import { ArrowUpRight, Clock } from 'lucide-react'
 import { EXCURSION_IMAGE } from '../config/images'
 import { pathFor } from '../config/routes'
 import type { Excursion } from '../data/excursions'
-import { useLang } from '../context/LangContext'
+import { fmt, useLang } from '../context/LangContext'
 import Img from './Img'
 
 export default function TourCard({ tour, compact = false }: { tour: Excursion; compact?: boolean }) {
@@ -22,7 +22,7 @@ export default function TourCard({ tour, compact = false }: { tour: Excursion; c
         </h3>
         {!compact && <p className="mt-2 text-[15px] leading-relaxed text-stone">{copy.short}</p>}
         <div className={`mt-auto flex items-center pt-5 text-sm ${compact ? "justify-end" : "justify-between gap-3"}`}>
-          {!compact && <span className="inline-flex items-center gap-1.5 text-stone"><Clock className="h-4 w-4" aria-hidden="true" />{tour.duration ?? t.common.durationOnRequest}</span>}
+          {!compact && <span className="inline-flex items-center gap-1.5 text-stone"><Clock className="h-4 w-4" aria-hidden="true" />{fmt(t.common.waitIncluded, { h: tour.waitHours })}{tour.extraHour ? ` · ${fmt(t.common.extraHour, { p: tour.extraHour })}` : ''}</span>}
           <span className="inline-flex shrink-0 items-center gap-1 font-semibold text-red">{t.common.discoverMore}<ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true" /></span>
         </div>
       </div>
